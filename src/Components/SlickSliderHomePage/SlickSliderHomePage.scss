@@ -1,0 +1,53 @@
+@import "../../assets/VarMix/variabels.scss";
+@import "../../assets/VarMix/mixins.scss";
+
+
+.slide-pages {
+    text-align: center;
+    background: $grayBorder;
+    height: 300px;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    a {
+        margin: 0 12px;
+
+    }
+    
+}
+.slick-prev,
+.slick-next {
+    top: 50%;
+    height: 100%;
+    width: 60px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1;
+    &::before {
+        content: ''; 
+        position: absolute;
+        top: 0; 
+        left: 20%;
+        width: 60%;
+        height: 100%;
+        background: url(../../assets/images/next.png) center no-repeat;
+        background-size: contain;
+    }
+}
+.slick-next {
+    right: -45px;
+  
+}
+.slick-prev {
+   left: -45px;
+
+    &::before {
+        transform: rotate(180deg);
+    }
+}
+.slick-dots {
+bottom: -40px;
+}

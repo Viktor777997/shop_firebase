@@ -1,0 +1,37 @@
+@mixin homePageBorders  {
+
+    border: 1px solid $grayBorder;
+    border-radius: 5px;
+}
+
+@mixin backgroundProps {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+}
+@mixin categoryFonts {
+    font-size: 16px;
+    letter-spacing: 1px;
+
+    @media  only screen and  (max-width: 990px) {
+        font-size: 15px;
+    }
+}
+
+@mixin  headerFonts {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+@mixin  brandFonts {
+    font-size: 32px;
+    letter-spacing: 2px;
+    @media  only screen and  (max-width: 768px) {
+        font-size: 25px;
+        letter-spacing: 1px;
+    }
+    
+}
+
+@mixin  categoryChangesTime {
+    transition-duration: .5s;
+}

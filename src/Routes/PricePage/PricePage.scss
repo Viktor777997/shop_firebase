@@ -1,0 +1,31 @@
+@import "../../assets/VarMix/variabels";
+@import "../../assets/VarMix/mixins.scss";
+
+
+.prices-div {
+    height: 100%;
+
+    li {
+        margin-bottom: 20px;
+        @include homePageBorders;
+        position: relative;
+    }
+    a {
+        display: block;
+        padding: 5px 10px;
+        &::before {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: 10px;
+            top: 5px;
+            background: url(../../assets/images/download.png) center no-repeat;      
+            background-size:  cover;     
+        }
+        &:hover {
+            text-decoration: underline;
+
+        }
+    }
+}
