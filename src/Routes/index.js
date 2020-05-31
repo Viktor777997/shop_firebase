@@ -1,23 +1,28 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HomePage from "./HomePage";
-import ContactPage from "./ContactPage";
-import PricePage from "./PricePage";
+import React from 'react';
 
-const App = () => {
+import { Provider as ReduxProvider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { Switch } from 'react-router-dom';
 
+import HomePage from './HomePage';
+import ContactPage from './ContactPage';
+import PricePage from './PricePage';
+
+import { RouteWithMainLayout } from '../Layout';
+
+const App = (props) => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={HomePage} exact />
-        <Route path="/home" component={HomePage} exact />
-        <Route path="/:price" component={PricePage} exact />
-        <Route path="/contact" component={ContactPage} exact />
-
-
-      </Switch>
-    </Router>
-  )
-}
+    <ReduxProvider store={props.store}>
+      <ConnectedRouter history={props.history}>
+        <Switch>
+          <RouteWithMainLayout path="/" component={HomePage} exact />
+          <RouteWithMainLayout path="/home" component={HomePage} exact />
+          <RouteWithMainLayout path="/:price" component={PricePage} exact />
+          <RouteWithMainLayout path="/contact" component={ContactPage} exact />
+        </Switch>
+      </ConnectedRouter>
+    </ReduxProvider>
+  );
+};
 
 export default App;
