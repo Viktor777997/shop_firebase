@@ -29,18 +29,18 @@ class ApiService {
   createItem = async ({ title, description, image, ownerId, ownerName } = {}) => {
     const fileName = `${ownerId}_${makeId(10)}.${getExtension(image.name)}`;
 
-    let resp = await this._firebase.uploadFile('/panoramas', image, undefined, {
-      name: fileName,
-    });
+    // let resp = await this._firebase.uploadFile('/panoramas', image, undefined, {
+    //   name: fileName,
+    // });
 
-    const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
+    // const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
 
-    const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
+    // const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
 
-    resp = await this._firestore.collection('items').add({
+    const resp = await this._firestore.collection('items').add({
       createDate: new Date(),
-      image: `${getPathFromUrl(imgUrl)}?alt=media`,
-      thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
+      // image: `${getPathFromUrl(imgUrl)}?alt=media`,
+      // thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
       title,
       description,
       ownerId,
@@ -58,8 +58,8 @@ class ApiService {
 
     resp = resp.data();
 
-    await this._firebase.deleteFile(`panoramas/${resp.fileName}`);
-    await this._firebase.deleteFile(`panoramas/thumb-400-${resp.fileName}`);
+    // await this._firebase.deleteFile(`panoramas/${resp.fileName}`);
+    // await this._firebase.deleteFile(`panoramas/thumb-400-${resp.fileName}`);
 
     resp = await doc.delete();
 
