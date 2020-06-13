@@ -1,0 +1,21 @@
+@import "../../assets/VarMix/mixins.scss";
+@import "../../assets/VarMix/variabels";
+
+table {
+
+    
+    a {
+        color: $black;
+        &:hover {
+            color: $black;
+            text-decoration: underline;
+        }
+    }
+    td {
+        vertical-align: inherit;
+    }
+    .breadcrumb {
+        background: $white;
+        margin-bottom: 0;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
-import './SlickSliderHomePage.scss'
+import './SlickSliderHomePage.scss';
 
 
 export default class SlickSliderHomePage extends Component {
@@ -8,7 +8,7 @@ export default class SlickSliderHomePage extends Component {
         const settings = {
             infinite: true,
             // autoplay: true,
-            autoplaySpeed: 1000,
+            autoplaySpeed: 2000,
             slidesToShow: 3,
             dots: true,
             slidesToScroll: 1,
@@ -42,43 +42,43 @@ export default class SlickSliderHomePage extends Component {
         return (
             <div>
                 <Slider {...settings}>
-                   
-                        <div className="slide-pages">
-                            <a href="">
-                                <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                    alt=""></img>
-                            </a>
-                        </div>
-                        <div className="slide-pages">
-                            <a href="">
-                                <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                    alt=""></img>
-                            </a>
-                        </div>
-                        <div className="slide-pages">
-                            <a href="">
-                                <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                    alt=""></img>
-                            </a>
-                        </div>
-                        <div className="slide-pages">
-                            <a href="">
-                                <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                    alt=""></img>
-                            </a>
-                        </div>
-                        <div className="slide-pages">
-                            <a href="">
-                                <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                    alt=""></img>
-                            </a>
-                        </div>
-                        <div className="slide-pages">
-                            <a href="">
-                                <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                    alt=""></img>
-                            </a>
-                        </div>
+
+                    <div className="slide-pages">
+                        <a href="">
+                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
+                                alt=""></img>
+                        </a>
+                    </div>
+                    <div className="slide-pages">
+                        <a href="">
+                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
+                                alt=""></img>
+                        </a>
+                    </div>
+                    <div className="slide-pages">
+                        <a href="">
+                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
+                                alt=""></img>
+                        </a>
+                    </div>
+                    <div className="slide-pages">
+                        <a href="">
+                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
+                                alt=""></img>
+                        </a>
+                    </div>
+                    <div className="slide-pages">
+                        <a href="">
+                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
+                                alt=""></img>
+                        </a>
+                    </div>
+                    <div className="slide-pages">
+                        <a href="">
+                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
+                                alt=""></img>
+                        </a>
+                    </div>
                 </Slider>
             </div>
         );

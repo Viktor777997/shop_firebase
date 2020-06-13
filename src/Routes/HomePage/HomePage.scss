@@ -25,7 +25,6 @@
         padding: 40px 0 20px 0;
         font-size: 50px;
         letter-spacing: 2px;
-
     }
 }
 
@@ -36,13 +35,7 @@
         }
     }
 }
-.menu-btn-clicked {
-    .gen_div {
-        &::before {
-           display: block;
-        }
-    }
-}
+
 
 .slide-and-random-cards {
     
@@ -51,7 +44,6 @@
 }
 
 .general-slide {
-    margin-top: 60px !important;
     margin-bottom: 80px !important;
     // overflow: hidden;
    
@@ -97,3 +89,4 @@
         }
     }
 }
+

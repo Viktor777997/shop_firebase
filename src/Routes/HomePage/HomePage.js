@@ -4,74 +4,55 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
 import $ from 'jquery';
-
-import './HomePage.scss';
-
+import { Link } from 'react-router-dom';
 import SlickSliderHomePage from '../../Components/SlickSliderHomePage/SlickSliderHomePage';
 import Categories from '../../Components/Categories';
+import './HomePage.scss';
 
 class HomePage extends Component {
+
+
   componentDidMount() {
     this.props.getItems();
-    $(document).ready(function() {
-      // $('.category-open-btn').click(function () {
-      //   $('body').toggleClass('menu-btn-clicked');
-      //   $('body').toggleClass(' hovred');
-      //   $(".firstLine").toggleClass("firstLineX")
-      //   $(".secondLine").toggleClass("secondLineX")
-      //   $(".thirdLine").toggleClass("thirdLineX")
-      // });
-      // $('.categories_li').hover(function () {
-      //   // over
-      //   $('body').addClass(' hovred');
-      // }, function () {
-      //   $('body').removeClass(' hovred');
-      // }
-      // );
-      // $('.general-slide').slick({
-      //   infinite: true,
-      //   // autoplay: true,
-      //   autoplaySpeed: 1000,
-      //   slidesToShow: 3,
-      //   dots: true,
-      //   slidesToScroll: 1,
-      //   responsive: [
-      //     {
-      //       breakpoint: 992,
-      //       settings: {
-      //         slidesToShow: 3,
-      //         slidesToScroll: 1,
-      //         centerMode: false,
-      //       }
-      //     },
-      //     {
-      //       breakpoint: 777,
-      //       settings: {
-      //         slidesToShow: 2,
-      //         slidesToScroll: 1,
-      //         centerMode: false,
-      //       }
-      //     },
-      //     {
-      //       breakpoint: 481,
-      //       settings: {
-      //         slidesToShow: 1,
-      //         slidesToScroll: 1,
-      //         centerMode: false,
-      //       }
-      //     },
-      //   ]
-      // });
+    $(document).ready(function () {
+      $('.category-open-btn').click(function () {
+        $('body').toggleClass('menu-btn-clicked');
+        $('body').toggleClass(' hovred');
+        $(".firstLine").toggleClass("firstLineX")
+        $(".secondLine").toggleClass("secondLineX")
+        $(".thirdLine").toggleClass("thirdLineX")
+      });
+      $('.categories_li').hover(function () {
+        // over
+        $('body').addClass(' hovred');
+      }, function () {
+        $('body').removeClass(' hovred');
+      }
+      );
+
+    });
+    $(document).click(function (e) {
+      let target = e.target;
+      if (!$(target).is('.categories') && !$(target).parents().is('.categories')) {
+        $('body').removeClass(' hovred');
+        $('body').removeClass(' menu-btn-clicked');
+        $('.categories_li').removeClass(' li_clicked');
+        $(".firstLine").removeClass("firstLineX")
+        $(".secondLine").removeClass("secondLineX")
+        $(".thirdLine").removeClass("thirdLineX")
+      }
     });
   }
 
   render() {
+    
+    const { data } = this.props.items
     return (
       <div className="App">
         <div className="gen_div container">
           <h1>Title</h1>
 
-          <div className="general-div">
+          <div className="general-div"> 
             <Categories />
 
             <div className="slide-and-random-cards">
@@ -79,12 +60,12 @@ class HomePage extends Component {
                 <SlickSliderHomePage />
               </div>
               <div className="random_cards ">
-                {this.props.items.data.map(item => (
+                {data.map(item => (
                   <div className="card " key={item.id}>
-                    <a href="/">
+                    <Link to={`/card/${item.id}`}>
                       <img
                         className="card-img-top"
-                        src="https://i.pinimg.com/736x/ab/b6/a8/abb6a800ab2193fcedd9bda566b7402c.jpg"
+                        src={item.images[0]}
                         alt="Card cap"
                       />
                       <div className="card-body">
@@ -93,7 +74,7 @@ class HomePage extends Component {
                           {item.description}
                         </p>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -106,6 +87,7 @@ class HomePage extends Component {
 }
 
 function mapStateToProps(state) {
+  // console.log(state)
   return {
     items: state.item.list,
   };

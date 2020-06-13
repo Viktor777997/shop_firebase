@@ -2,9 +2,14 @@
 @import "../../assets/VarMix/mixins.scss";
 
 
-.prices-div {
-    height: 100%;
+.prices-title {
+    text-align: center;
+    padding: 0 0 5vh 0;
+}
 
+.prices-div {
+
+    height: 100%;    
     li {
         margin-bottom: 20px;
         @include homePageBorders;
@@ -29,3 +34,5 @@
         }
     }
 }
+
+@import "../../assets/medias/media.scss";

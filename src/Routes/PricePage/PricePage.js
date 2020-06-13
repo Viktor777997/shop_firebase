@@ -8,7 +8,11 @@ class PricePage extends Component {
         return (
 
             <div className="container" >
-
+                <div>
+                    <h1 className="prices-title">
+                        prices-div
+                    </h1>
+                </div>
                 <div className="prices-div">
                     <ul>
                         <li><a href="">Exel file</a></li>

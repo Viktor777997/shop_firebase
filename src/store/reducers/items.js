@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/item';
 
 const initialState = {
   current: {
-    isLoaded: true,
+    isLoaded: false,
     error: null,
     data: null,
   },
@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: {
-          ...state.current,
+          data: null,
           isLoaded: false,
           error: null,
         },

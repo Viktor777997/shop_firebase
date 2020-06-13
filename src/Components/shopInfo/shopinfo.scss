@@ -1,0 +1,70 @@
+@import "../../assets/VarMix/variabels.scss";
+@import "../../assets/VarMix/mixins.scss";
+
+.adress-items {
+    margin-bottom: 10px;
+
+    svg {
+        margin-bottom: 4px;
+        margin-right: 5px;
+    }
+
+    span {
+        font-weight: 700;
+        margin-right: 7px;
+    }
+}
+
+.shopInfo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .navbar-nav {
+        padding: 0 10px;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        a {
+            color: $white;
+
+            &::before {
+                display: none;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .nav-item {
+            // text-align: center;
+            flex: 1;
+        }
+    }
+}
+
+.contact-page,.modal-content {
+    .shopInfo {
+        .navbar-nav {
+            flex-direction: column;
+        }
+
+        a {
+            color: #212529;
+
+            &::before {
+                display: none;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+

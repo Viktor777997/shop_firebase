@@ -17,21 +17,5 @@
         align-items: center;
         color: $white;
     }
-    .navbar-nav {
-        padding: 0 10px;
-        width: 100%;
-        margin-top: 20px;
-        margin-bottom: 10px;
-        flex-direction: row;
-        justify-content: space-evenly;
-        a {
-            color: $white;
-
-        }
-        .nav-item {
-            text-align: center;
-            flex: 1;
-        }
     
-    }
 }

@@ -31,7 +31,10 @@
     }
     
 }
-
+@mixin infoText {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
 @mixin  categoryChangesTime {
     transition-duration: .5s;
 }

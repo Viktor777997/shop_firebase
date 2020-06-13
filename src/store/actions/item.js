@@ -40,12 +40,12 @@ export const fetchItems = query => (dispatch, getState, { getFirebase, getFirest
     });
 };
 
-export const fetchItem = id => (dispatch, getState, { getFirebase, getFirestore }) => {
+export const fetchItem = data => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
 
   dispatch(createAction(FETCH_ITEM_REQUEST));
 
-  Api.getItem(id)
+  Api.getItem(data.id)
     .then(payload => {
       dispatch(createAction(FETCH_ITEM_SUCCESS, payload));
     })

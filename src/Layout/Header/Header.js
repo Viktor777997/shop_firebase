@@ -8,7 +8,7 @@ class Header extends Component {
       <header className="header">
         <nav className="navbar navbar-expand-lg navbar-dark  ">
           <div className="container">
-            <a className="navbar-brand" href="/home">
+            <a className="navbar-brand" href="/">
               Navbar
             </a>
             <button

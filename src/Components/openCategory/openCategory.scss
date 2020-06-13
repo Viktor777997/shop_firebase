@@ -1,0 +1,21 @@
+
+.open-category {
+    position: absolute;
+    width: 100%;
+    right: -101%;
+    top: 0;
+    min-width: 200px;
+    display: none;
+    height: 100%;
+    a {
+        font-weight: 400 !important;
+        &::after {
+            display: none;
+        }
+    }
+
+    &:hover {
+    display: block;
+    }
+    
+}
