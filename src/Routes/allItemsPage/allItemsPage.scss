@@ -1,14 +1,15 @@
 @import "../../assets/VarMix/mixins.scss";
 @import "../../assets/VarMix/variabels";
 
-table {
+.allItemsTable {
 
     
     a {
-        color: $black;
+        cursor: pointer;
+        color: $black !important;
         &:hover {
-            color: $black;
-            text-decoration: underline;
+            color: $black !important;
+            text-decoration: underline !important;
         }
     }
     td {

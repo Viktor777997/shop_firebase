@@ -40,12 +40,12 @@ export const fetchItems = query => (dispatch, getState, { getFirebase, getFirest
     });
 };
 
-export const fetchItem = data => (dispatch, getState, { getFirebase, getFirestore }) => {
+export const fetchItem = id => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
 
   dispatch(createAction(FETCH_ITEM_REQUEST));
 
-  Api.getItem(data.id)
+  Api.getItem(id)
     .then(payload => {
       dispatch(createAction(FETCH_ITEM_SUCCESS, payload));
     })
@@ -56,7 +56,7 @@ export const fetchItem = data => (dispatch, getState, { getFirebase, getFirestor
 
 export const createItem = data => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
-
+  console.log(data)
   dispatch(createAction(CREATE_ITEM_REQUEST));
 
   Api.createItem(data)

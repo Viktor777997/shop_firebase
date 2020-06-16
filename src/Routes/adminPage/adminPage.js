@@ -13,7 +13,7 @@ const AdminPage = () => {
                     <Link to='/admin/itemCreate' className="btn btn-dark col-3">Create Item</Link>
                 </div>
                 <div className=' mb-3'>
-                    <Link to='/admin/itemChange' className="btn btn-dark col-3">Change Item</Link>
+                    <Link to='/admin/allItems' className="btn btn-dark col-3">All Items</Link>
                 </div>
                 <div className=' mb-3'>
                     <Link to='/admin/categoriesCreate' className="btn btn-dark col-3">Create Categories</Link>

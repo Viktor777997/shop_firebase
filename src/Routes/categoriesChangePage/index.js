@@ -1,3 +1,2 @@
 import CategoriesChangePage from './categoriesChangePage'
-
-export default  CategoriesChangePage;
+export default CategoriesChangePage;

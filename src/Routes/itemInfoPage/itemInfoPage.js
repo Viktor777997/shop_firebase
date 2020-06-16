@@ -6,22 +6,19 @@ import { fetchItem } from '../../store/actions/item';
 import './itemInfoPage.scss'
 import BuyItem from '../../Components/buyItem';
 
-class itemInfoPage extends Component {
-    // state = {
-    //     id
-    // }
+class ItemInfoPage extends Component {
+   
 
     componentDidMount() {
 
-        this.loadData()
+        this.props.getItem(this.props.match.params.id);
     }
-    loadData = () => this.props.getItem({ id: this.props.match.params.id });
     render() {
         // console.log(this.props)
         const { item } = this.props
         console.log(item)
 
-        if (!item.isLoaded && item.data === null) {
+        if (!item.isLoaded || item.data === null) {
             return (
                 <div className="spinner-border text-primary" role="status">
                     <span className="sr-only">Loading...</span>
@@ -78,4 +75,4 @@ const enhance = compose(
     withRouter
 );
 
-export default enhance(itemInfoPage);
+export default enhance(ItemInfoPage);

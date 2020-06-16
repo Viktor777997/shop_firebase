@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import './categoriesChangePage.scss'
+import './allItemsPage.scss'
 const CategoriesChangePage = (prosp) => {
 
     return (
         <div className='container'>
-            <table class="table table-bordered">
-                <thead class="thead-dark">
+            <table className="table table-bordered">
+                <thead className="thead-dark">
                     <tr>
                         <th scope="col"><input type="checkbox"></input></th>
                         <th scope="col">Name</th>
