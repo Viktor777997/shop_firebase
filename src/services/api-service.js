@@ -26,7 +26,7 @@ class ApiService {
     return { id, ...resp.data() };
   };
 
-  createItem = async ({ title, description, image, ownerId, ownerName } = {}) => {
+  createItem = async ({ title, text, price, available } = {}) => {
     // const fileName = `${ownerId}_${makeId(10)}.${getExtension(image.name)}`;
 
     // let resp = await this._firebase.uploadFile('/panoramas', image, undefined, {
@@ -42,10 +42,9 @@ class ApiService {
       // image: `${getPathFromUrl(imgUrl)}?alt=media`,
       // thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
       title,
-      description,
-      // ownerId,
-      // ownerName,
-      // fileName,
+      text,
+      price,
+      available,
     });
 
     return resp;
