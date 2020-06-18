@@ -50,6 +50,42 @@ class ApiService {
     return resp;
   };
 
+  updateItem = async (id = null, { title, text, price, available, image }) => {
+    const doc = await this._firestore.collection('items').doc(id);
+
+    let imgUrl, thumbUrl;
+
+    if (image) {
+      const fileName = `${makeId(10)}.${getExtension(image.name)}`;
+
+      let resp = await this._firebase.uploadFile('/images', image, undefined, {
+        name: fileName,
+      });
+
+      imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
+
+      thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
+    }
+
+    let resp = await doc.update({
+      title,
+      text,
+      price,
+      available,
+      thumbUrl,
+      imgUrl,
+    });
+
+    resp = resp.data();
+
+    // await this._firebase.deleteFile(`panoramas/${resp.fileName}`);
+    // await this._firebase.deleteFile(`panoramas/thumb-400-${resp.fileName}`);
+
+    // resp = await doc.delete();
+
+    return resp;
+  };
+
   deleteItem = async (id = null) => {
     const doc = await this._firestore.collection('items').doc(id);
 
