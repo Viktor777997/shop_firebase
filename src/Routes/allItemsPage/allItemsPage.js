@@ -12,12 +12,24 @@ class AllItemsPage extends Component {
     state = {
         term: '',
         available: null,
+        isDidAction: false
     }
 
     componentDidMount() {
-        this.props.getItems()
+        this.loadData()
         // this.saveData(this.props.items.data)
     }
+
+
+    componentDidUpdate(prevProps, prevState){
+        if(this.state.isDidAction && !prevProps.item.isLoaded && this.props.item.isLoaded){
+            this.setState({isDidAction: false});
+            this.loadData()
+        }
+    }
+
+
+
     // componentDidUpdate(prevProps, prevState) {
 
     //     // if (prevProps.items.data !== this.props.items.data) {
@@ -29,10 +41,13 @@ class AllItemsPage extends Component {
 
     // }
 
-    delete = async (id) => {
-        console.log(id)
-        await this.props.deleteItem(id)
-        this.props.getItems()
+    loadData = ()=>this.props.getItems()
+
+    delete = (id) => {
+        this.props.deleteItem(id);
+        this.setState({
+            isDidAction: true
+        });
     }
 
     serchedItems = () => {
@@ -153,6 +168,7 @@ function mapStateToProps(state) {
     console.log(state)
     return {
         items: state.item.list,
+        item: state.item.current,
     };
 }
 
