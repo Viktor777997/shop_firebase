@@ -33,9 +33,10 @@ class CreateItem extends Component {
                 })
             case 'image':
                 return this.setState({
-                    image: `ascascasc${e.target.value}`,
+                    image: e.target.files[0],
                 })
-
+            default:
+                break;
         }
 
 
