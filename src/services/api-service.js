@@ -27,20 +27,20 @@ class ApiService {
   };
 
   createItem = async ({ title, text, price, available, image } = {}) => {
-    // const fileName = `${ownerId}_${makeId(10)}.${getExtension(image.name)}`;
+    const fileName = `${makeId(10)}.${getExtension(image.name)}`;
 
-    // let resp = await this._firebase.uploadFile('/panoramas', image, undefined, {
-    //   name: fileName,
-    // });
+    let resp = await this._firebase.uploadFile('/images', image, undefined, {
+      name: fileName,
+    });
 
-    // const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
+    const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
 
-    // const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
+    const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
 
-    const resp = await this._firestore.collection('items').add({
+    resp = await this._firestore.collection('items').add({
       createDate: new Date(),
-      // image: `${getPathFromUrl(imgUrl)}?alt=media`,
-      // thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
+      image: `${getPathFromUrl(imgUrl)}?alt=media`,
+      thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
       title,
       text,
       price,
