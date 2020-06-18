@@ -11,7 +11,7 @@ import './allItemsPage.scss'
 class AllItemsPage extends Component {
     state = {
         term: '',
-        available: null,
+        available: "all",
         isDidAction: false
     }
 
@@ -69,13 +69,13 @@ class AllItemsPage extends Component {
     //     this.setState({...this.state, itemsData: data })
     // }
     onAvailableChange = (e) => {
-        // this.setState(state =>  ({...state, available: e.target.value} ))
+        const available = e.target.value;
+        this.setState(state =>  ({...state, available} ));
 
-        console.log(e.target.value)
-        if (e.target.value === 'true') {
+        if (available === 'true') {
             return this.props.getItems([['available', '==', "true"]]);
         }
-        else if (e.target.value === 'false') {
+        else if (available === 'false') {
             return this.props.getItems([['available', '==', 'false']]);
         }
         return this.props.getItems()
@@ -127,10 +127,10 @@ class AllItemsPage extends Component {
                             </th>
                             <th scope="col">
                                 <select className="form-control form-control" id="exampleFormControlSelect1"
-                                    onChange={this.onAvailableChange} >
-                                    <option>Select</option>                                    
-                                    <option>true</option>
-                                    <option>false</option>
+                                    onChange={this.onAvailableChange} value={this.state.available}>
+                                    <option selected value="all">All</option>                                    
+                                    <option value="true">true</option>
+                                    <option value="false">false</option>
                                 </select>
                             </th>
                             <th scope="col">Price</th>
