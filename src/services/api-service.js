@@ -57,8 +57,8 @@ class ApiService {
 
     resp = resp.data();
 
-    // await this._firebase.deleteFile(`panoramas/${resp.fileName}`);
-    // await this._firebase.deleteFile(`panoramas/thumb-400-${resp.fileName}`);
+    await this._firebase.deleteFile(`panoramas/${resp.fileName}`);
+    await this._firebase.deleteFile(`panoramas/thumb-400-${resp.fileName}`);
 
     resp = await doc.delete();
 
