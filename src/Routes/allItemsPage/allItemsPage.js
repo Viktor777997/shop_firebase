@@ -18,14 +18,26 @@ class AllItemsPage extends Component {
         this.props.getItems()
         // this.saveData(this.props.items.data)
     }
+    // componentDidUpdate(prevProps, prevState) {
 
-    delete = (id) => {
+    //     // if (prevProps.items.data !== this.props.items.data) {
+    //     //     // console.log(prevProps)
+    //     //     this.props.getItems()
+
+    //     // }
+
+
+    // }
+
+    delete = async (id) => {
         console.log(id)
-        this.props.deleteItem(id)
+        await this.props.deleteItem(id)
+        this.props.getItems()
     }
+
     serchedItems = () => {
         console.log('ascsc')
-        this.props.getItems([['title', '>=', 'u']]);
+        // this.props.getItems([['title', '>=', 'u']]);
     }
     // searchData = (data, name) => {
     //     // data.title.toLowerCase().indexOf(name.toLowerCase())
@@ -43,11 +55,13 @@ class AllItemsPage extends Component {
     // }
     onAvailableChange = (e) => {
         // this.setState(state =>  ({...state, available: e.target.value} ))
+
+        console.log(e.target.value)
         if (e.target.value === 'true') {
-            return this.props.getItems([['available', '==', true]]);
+            return this.props.getItems([['available', '==', "true"]]);
         }
         else if (e.target.value === 'false') {
-            return this.props.getItems([['available', '==', false]]);
+            return this.props.getItems([['available', '==', 'false']]);
         }
         return this.props.getItems()
     }
@@ -56,8 +70,7 @@ class AllItemsPage extends Component {
     render() {
 
         const { items } = this.props;
-        // console.log(items.data);
-        // console.log(this.state.itemsData)
+        console.log(items);
 
         // console.log(this.state.itemsData) 
 
@@ -89,17 +102,20 @@ class AllItemsPage extends Component {
                                         aria-label="Search"
                                     // onChange={this.onHandleChnage}
                                     ></input>
-                                    <button className="btn my-2 my-sm-0 search-btn col-1" type="button" onClick={this.serchedItems}></button>
+                                    <button className="btn my-2 my-sm-0 search-btn" type="button" onClick={this.serchedItems}>
+                                        <svg className="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                                            <path fillRule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </th>
                             <th scope="col">
                                 <select className="form-control form-control" id="exampleFormControlSelect1"
-                                    onChange={this.onAvailableChange}>
-
-                                    <option>Select</option>
+                                    onChange={this.onAvailableChange} >
+                                    <option>Select</option>                                    
                                     <option>true</option>
                                     <option>false</option>
-                                
                                 </select>
                             </th>
                             <th scope="col">Price</th>
@@ -112,11 +128,11 @@ class AllItemsPage extends Component {
                             items.data.map(item => (
                                 <tr key={item.id}>
                                     <td>{item.title}</td>
-                                    <td>{item.available ? 'yes' : 'no'}  </td>
+                                    <td>{item.available === 'true' ? 'yes' : 'no'}  </td>
                                     <td>{`${item.price} rub`}</td>
                                     <td>
                                         <a className="mr-2" onClick={() => this.delete(item.id)} >Delete</a>
-                                        <Link to={`/admin/itemCreate/${item.id}`} className="mr-2">Edit</Link>
+                                        <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Edit</Link>
                                         <Link to={`/card/${item.id}`} className="mr-2">Show</Link>
                                     </td>
                                 </tr>

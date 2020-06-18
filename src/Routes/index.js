@@ -9,6 +9,7 @@ import ContactPage from './ContactPage';
 import PricePage from './PricePage';
 import LoginPage from './loginPage';
 import ItemCreatePage from './itemCreatePage'
+import ItemEditPage from './itemEditPage';
 import CategoriesCreatePage from './categoriesCreatePage';
 import CategoriesChangePage from './allItemsPage';
 import ItemInfoPage from './itemInfoPage';
@@ -31,7 +32,7 @@ const App = (props) => {
           <RouteWithMainLayout path="/admin/login" component={LoginPage} exact />
           <RouteWithMainLayout path="/admin/allItems" component={AllItemsPage} exact/>
           <RouteWithMainLayout path="/admin/itemCreate" component={ItemCreatePage} exact/>
-          <RouteWithMainLayout path="/admin/itemCreate/:id" component={ItemCreatePage} exact/>
+          <RouteWithMainLayout path="/admin/itemEdit/:id" component={ItemEditPage} exact/>
           <RouteWithMainLayout path="/admin/categoriesCreate" component={CategoriesCreatePage} exact />
           <RouteWithMainLayout path="/admin/categoriesChange" component={CategoriesChangePage} exact />
         </Switch>

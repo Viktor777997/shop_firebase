@@ -2,20 +2,31 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchItem } from '../../store/actions/item';
-import './itemInfoPage.scss'
-import BuyItem from '../../Components/buyItem';
+import { fetchItem, createItem } from '../../store/actions/item';
+import CreateItem from '../../Components/createItem'
 
-class ItemInfoPage extends Component {
+class ItemEditPage extends Component {
 
+    state = {
+        id:  this.props.match.params.id,
+    }
 
     componentDidMount() {
-
-        this.props.getItem(this.props.match.params.id);
+        this.props.getItem(this.state.id);
+      
     }
+    // componentDidUpdate(prevProps, prevState) {
+        
+    //     if (prevProps!==this.props) {
+    //     this.props.getItem(this.state.id);
+            
+    //     }
+    // }
+
     render() {
-        // console.log(this.props)
-        const { item } = this.props
+        console.log(this.props)
+        const { item, createItem, getItem} = this.props
+
 
         if (!item.isLoaded || item.data === null) {
             return (
@@ -25,32 +36,22 @@ class ItemInfoPage extends Component {
             )
         }
 
+
         if (item.error) {
             return <div>
                 Error
-            </div>
+        </div>
         }
-
         return (
-            <div className="container">
-                <div className="">
-                    <h1>{item.data.title}</h1>
-                </div>
-                <div className="item-gen-div row">
-                    <div className="item-info col-6">
-                        <img src={item.data.images}></img>
-                        <p>{item.data.text}</p>
-                    </div>
-                    <div className="item-right-div col">
-                        <BuyItem />
-                        <h2>{item.data.price}$</h2>
-                    </div>
-                </div>
+            <div className='container'>
+                <CreateItem
+                    create={createItem}
+                    data={item.data}
+                />
             </div>
         );
     }
 }
-
 
 function mapStateToProps(state) {
     // console.log(state)
@@ -63,6 +64,7 @@ function mapDispatchToProps(dispatch) {
 
     return {
         getItem: (data) => dispatch(fetchItem(data)),
+        createItem: (data) => dispatch(createItem(data)),
     };
 }
 
@@ -74,4 +76,4 @@ const enhance = compose(
     withRouter
 );
 
-export default enhance(ItemInfoPage);
+export default enhance(ItemEditPage);

@@ -11,7 +11,7 @@ const Categories = () => {
       <button className="btn btn-dark submenubtn category-open-btn">
         <span className="menuBtnName">
           Menu
-                    </span>
+        </span>
         <div>
           <span className="firstLine"></span>
           <span className="secondLine"></span>

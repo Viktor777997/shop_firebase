@@ -3,41 +3,39 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
-import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import SlickSliderHomePage from '../../Components/SlickSliderHomePage/SlickSliderHomePage';
 import Categories from '../../Components/Categories';
+import $ from 'jquery';
 import './HomePage.scss';
 
 class HomePage extends Component {
   componentDidMount() {
-    this.props.getItems([['available', '==', true]]);
-    $(document).ready(function() {
-      $('.category-open-btn').click(function() {
+    // this.props.getItems()
+
+    this.props.getItems([['available', '==', 'true']]);
+    $(document).ready(function () {
+      $('.category-open-btn').click(function () {
         $('body').toggleClass('menu-btn-clicked');
         $('body').toggleClass(' hovred');
         $('.firstLine').toggleClass('firstLineX');
         $('.secondLine').toggleClass('secondLineX');
         $('.thirdLine').toggleClass('thirdLineX');
+        console.log('ascasc')
       });
       $('.categories_li').hover(
-        function() {
+        function () {
           // over
           $('body').addClass(' hovred');
         },
-        function() {
+        function () {
           $('body').removeClass(' hovred');
         }
       );
     });
-    $(document).click(function(e) {
+    $(document).click(function (e) {
       let target = e.target;
-      if (
-        !$(target).is('.categories') &&
-        !$(target)
-          .parents()
-          .is('.categories')
-      ) {
+      if (!$(target).is('.categories') && !$(target).parents().is('.categories')) {
         $('body').removeClass(' hovred');
         $('body').removeClass(' menu-btn-clicked');
         $('.categories_li').removeClass(' li_clicked');
@@ -46,10 +44,29 @@ class HomePage extends Component {
         $('.thirdLine').removeClass('thirdLineX');
       }
     });
+
   }
 
   render() {
-    const { data } = this.props.items;
+    const { items } = this.props;
+
+    console.log(items)
+
+
+    if (!items.isLoaded || items.data === null) {
+      return (
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      )
+    }
+
+
+    if (items.error) {
+      return <div>
+        Error
+      </div>
+    }
     return (
       <div className="App">
         <div className="gen_div container">
@@ -63,10 +80,10 @@ class HomePage extends Component {
                 <SlickSliderHomePage />
               </div>
               <div className="random_cards ">
-                {data.map(item => (
+                {items.data.map(item => (
                   <div className="card " key={item.id}>
                     <Link to={`/card/${item.id}`}>
-                      <img className="card-img-top" src={item.images[0]} alt="Card cap" />
+                      <img className="card-img-top" src={item.image} alt="Card cap" />
                       <div className="card-body">
                         <h5 className="card-title">{item.title}</h5>
                         <p className="card-text">{item.description}</p>
@@ -84,7 +101,6 @@ class HomePage extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state)
   return {
     items: state.item.list,
   };
