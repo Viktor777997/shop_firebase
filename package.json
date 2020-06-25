@@ -2,6 +2,14 @@
   "name": "shop_firebase",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Viktor777997/shop_firebase"
+  },
+  "bugs": {
+    "url": "https://github.com/Viktor777997/shop_firebase/issues"
+  },
+  "homepage": "",
   "dependencies": {
     "connected-react-router": "6.5.2",
     "firebase": "6.3.0",
