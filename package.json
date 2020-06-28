@@ -10,7 +10,7 @@
     "url": "https://github.com/Viktor777997/shop_firebase/issues"
   },
   "engines": {
-    "node": "12.18.x",
+    "node": "12.x",
     "yarn": "1.22.x"
   },
   "dependencies": {

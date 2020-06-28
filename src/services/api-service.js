@@ -73,7 +73,7 @@ class ApiService {
       });
 
       data.imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
-      data.thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
+      data.thumbUrl = data.imgUrl.replace(fileName, `thumb-400-${fileName}`);
     }
 
 
