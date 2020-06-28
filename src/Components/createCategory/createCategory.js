@@ -58,7 +58,7 @@ class CreateCategory extends Component {
         else {
             this.props.createCategory(this.state)
             alert('category created')
-            setTimeout(() => location.reload(), 1000)
+            setTimeout(() => window.location.reload(), 1000)
         }
         e.preventDefault();
     }
