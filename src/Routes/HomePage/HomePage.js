@@ -6,65 +6,33 @@ import { fetchItems } from '../../store/actions/item';
 import { Link } from 'react-router-dom';
 import SlickSliderHomePage from '../../Components/SlickSliderHomePage/SlickSliderHomePage';
 import Categories from '../../Components/Categories';
-import $ from 'jquery';
 import './HomePage.scss';
+import Loading from '../../Components/loading';
+import AllCards from '../../Components/allCards';
+import ErrorPage from '../errorPage';
 
 class HomePage extends Component {
   componentDidMount() {
     // this.props.getItems()
 
     this.props.getItems([['available', '==', 'true']]);
-    $(document).ready(function () {
-      $('.category-open-btn').click(function () {
-        $('body').toggleClass('menu-btn-clicked');
-        $('body').toggleClass(' hovred');
-        $('.firstLine').toggleClass('firstLineX');
-        $('.secondLine').toggleClass('secondLineX');
-        $('.thirdLine').toggleClass('thirdLineX');
-        console.log('ascasc')
-      });
-      $('.categories_li').hover(
-        function () {
-          // over
-          $('body').addClass(' hovred');
-        },
-        function () {
-          $('body').removeClass(' hovred');
-        }
-      );
-    });
-    $(document).click(function (e) {
-      let target = e.target;
-      if (!$(target).is('.categories') && !$(target).parents().is('.categories')) {
-        $('body').removeClass(' hovred');
-        $('body').removeClass(' menu-btn-clicked');
-        $('.categories_li').removeClass(' li_clicked');
-        $('.firstLine').removeClass('firstLineX');
-        $('.secondLine').removeClass('secondLineX');
-        $('.thirdLine').removeClass('thirdLineX');
-      }
-    });
+
 
   }
 
   render() {
     const { items } = this.props;
 
-    console.log(items)
-
-
     if (!items.isLoaded || items.data === null) {
       return (
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
+        <Loading />
       )
     }
 
 
     if (items.error) {
       return <div>
-        Error
+        <ErrorPage />
       </div>
     }
     return (
@@ -79,19 +47,7 @@ class HomePage extends Component {
               <div className="general-slide">
                 <SlickSliderHomePage />
               </div>
-              <div className="random_cards ">
-                {items.data.map(item => (
-                  <div className="card " key={item.id}>
-                    <Link to={`/card/${item.id}`}>
-                      <img className="card-img-top" src={item.image} alt="Card cap" />
-                      <div className="card-body">
-                        <h5 className="card-title">{item.title}</h5>
-                        <p className="card-text">{item.description}</p>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+              <AllCards items={items} />
             </div>
           </div>
         </div>

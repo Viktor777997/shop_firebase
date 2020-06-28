@@ -3,29 +3,21 @@ import CreateItem from '../../Components/createItem'
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchItem, createItem } from '../../store/actions/item';
+import { createItem } from '../../store/actions/item';
 
 
 class ItemCreatePage extends Component {
 
     render() {
-
         return (
             <div className='container'>
                 <CreateItem create={this.props.createItem} />
             </div>
         );
-
     }
 }
 
 
-function mapStateToProps(state) {
-    // console.log(state)
-    return {
-        // item: state.item.current,
-    };
-}
 
 function mapDispatchToProps(dispatch) {
 
@@ -36,7 +28,7 @@ function mapDispatchToProps(dispatch) {
 
 const enhance = compose(
     connect(
-        mapStateToProps,
+        null,
         mapDispatchToProps
     ),
     withRouter

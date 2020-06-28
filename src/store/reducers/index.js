@@ -6,6 +6,7 @@ import { firebaseReducer } from 'react-redux-firebase';
 import authReducer from './auth';
 import userReducer from './user';
 import itemReducer from './items';
+import categoryReducer from './category';
 
 const rootReducer = history =>
   combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = history =>
     auth: authReducer,
     user: userReducer,
     item: itemReducer,
+    category: categoryReducer,
     router: connectRouter(history),
   });
 
