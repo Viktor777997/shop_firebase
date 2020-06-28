@@ -18,6 +18,10 @@ export const CREATE_ITEM_REQUEST = 'CREATE_ITEM_REQUEST';
 export const CREATE_ITEM_SUCCESS = 'CREATE_ITEM_SUCCESS';
 export const CREATE_ITEM_FAILURE = 'CREATE_ITEM_FAILURE';
 
+export const EDIT_ITEM_REQUEST = 'EDIT_ITEM_REQUEST';
+export const EDIT_ITEM_SUCCESS = 'EDIT_ITEM_SUCCESS';
+export const EDIT_ITEM_FAILURE = 'EDIT_ITEM_FAILURE';
+
 export const DELETE_ITEM_REQUEST = 'DELETE_ITEM_REQUEST';
 export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
 export const DELETE_ITEM_FAILURE = 'DELETE_ITEM_FAILURE';
@@ -56,15 +60,28 @@ export const fetchItem = id => (dispatch, getState, { getFirebase, getFirestore 
 
 export const createItem = data => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
-  console.log(data)
   dispatch(createAction(CREATE_ITEM_REQUEST));
-
+  console.log(data)
   Api.createItem(data)
     .then(payload => {
       dispatch(createAction(CREATE_ITEM_SUCCESS, payload.data));
     })
     .catch(payload => {
       dispatch(createAction(CREATE_ITEM_FAILURE, ErrorService.parse(payload)));
+    });
+};
+
+export const editItem = (id, data) => (dispatch, getState, { getFirebase, getFirestore }) => {
+  const Api = new ApiService(getFirestore(), getFirebase());
+  console.log(id)
+  console.log(data)
+  dispatch(createAction(EDIT_ITEM_REQUEST));
+  Api.updateItem(id, data)
+    .then(payload => {
+      dispatch(createAction(EDIT_ITEM_SUCCESS, payload.data));
+    })
+    .catch(payload => {
+      dispatch(createAction(EDIT_ITEM_FAILURE, ErrorService.parse(payload)));
     });
 };
 
@@ -81,3 +98,5 @@ export const deleteItem = id => (dispatch, getState, { getFirebase, getFirestore
       dispatch(createAction(DELETE_ITEM_FAILURE, ErrorService.parse(payload)));
     });
 };
+
+

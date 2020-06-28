@@ -1,23 +1,91 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { fetchCategories } from '../../store/actions/category';
+import { Link } from 'react-router-dom';
+
 import './openCategory.scss'
+import ApiService from '../../services/api-service';
+import { getFirestore } from 'redux-firestore';
+import { getFirebase } from 'react-redux-firebase';
 
 
-const OpenCategory = () => {
-    return (
-        <div className="open-category">
-            <ul className="categories_ul">
-                <li>
-                    <a href=''>Category first</a>
-                </li>
-                <li >
-                    <a>Category 1a</a>
-                </li>
-                <li >
-                    <a>Category 1a</a>
-                </li>
-            </ul>
-        </div>
-    );
+class OpenCategory extends Component {
+
+    state = {
+        categories: {
+            loaded: false,
+            data: null
+        }
+    }
+
+    componentDidMount() {
+
+        const Api = new ApiService(getFirestore(), getFirebase());
+        Api.getCategories([["categoryMother", "==", this.props.motherId]])
+            .then(payload => {
+                this.setState(state => ({
+                    ...state,
+                    categories: {
+                        ...state.categories,
+                        loaded: true,
+                        data: payload
+                    }
+                }))
+            })
+            .catch(payload => {
+                console.log("error: ", payload)
+            });
+    }
+
+    render() {
+        const { categories } = this.state;
+
+        console.log("categories: ", categories)
+
+        if (!categories.loaded || !categories.data) {
+            return "loading"
+        }
+
+        return (
+            <div className="open-category">
+                <ul className="categories_ul">
+                    {
+                        categories.data.map(item => (
+                            <li key={item.id}>
+                                <Link to={`/ctd/${item.id}`}>{item.title}</Link>
+                            </li>
+
+                        ))
+                    }
+
+                </ul>
+            </div>
+        );
+    }
 }
 
-export default OpenCategory;
+function mapStateToProps(state) {
+    // console.log(state)
+    return {
+        categories: state.category.list,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getCategories: query => dispatch(fetchCategories(query)),
+    };
+}
+
+const enhance = compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withRouter
+);
+
+export default enhance(OpenCategory);

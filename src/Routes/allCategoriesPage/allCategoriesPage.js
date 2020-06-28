@@ -3,16 +3,18 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchItems, deleteItem } from '../../store/actions/item';
+import { deleteCategory, fetchCategories } from '../../store/actions/category';
 import { Link } from 'react-router-dom';
+
+import './allItemsPage.scss'
 import Loading from '../../Components/loading';
 import ErrorPage from '../errorPage';
 
-class AllItemsPage extends Component {
-
+class AllCategoriesPage extends Component {
     state = {
         term: '',
         available: "all",
+        category: "all",
         isDidAction: false
     }
 
@@ -22,18 +24,22 @@ class AllItemsPage extends Component {
 
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.isDidAction && !prevProps.item.isLoaded && this.props.item.isLoaded) {
-            this.setState({ isDidAction: false });
+        if (this.state.isDidAction && !prevProps.category.isLoaded && this.props.category.isLoaded || this.state.category !== prevState.category) {
             this.loadData()
+            this.setState({ isDidAction: false });
         }
+
     }
 
-
-
-    loadData = () => this.props.getItems();
-
+    loadData = () => {
+        if (this.state.category === 'all') {
+            return this.props.getCategories([['categoryMother', '==', ``]])
+        }
+        return this.props.getCategories([['categoryMother', '==', `${this.state.category}`]])
+    }
     delete = (id) => {
-        this.props.deleteItem(id);
+        this.props.deleteCategory(id);
+
         this.setState({
             isDidAction: true
         });
@@ -41,42 +47,56 @@ class AllItemsPage extends Component {
 
     serchedItems = () => {
         console.log('ascsc')
-        // this.props.getItems([['title', '>=', 'u']]);
+        this.loadData()
+        // this.props.getItems([['title', '>=', 'b']]);
     }
 
     onAvailableChange = (e) => {
         const available = e.target.value;
+        console.log(available)
         this.setState(state => ({ ...state, available }));
-
         if (available === 'true') {
-            return this.props.getItems([['available', '==', "true"]]);
+            return this.props.getCategories([['available', '==', "true"]]);
         }
         else if (available === 'false') {
-            return this.props.getItems([['available', '==', 'false']]);
+            return this.props.getCategories([['available', '==', 'false']]);
         }
-        return this.props.getItems()
+        return this.props.getCategories()
+    }
+    onCategoryChange = (e) => {
+        const category = e.target.value;
+        console.log("category: ", category)
+        this.setState(state => ({ ...state, category }));
+        // if (category === 'all') {
+        //     return this.props.getCategories()
+        // }
+        // return this.props.getCategories([['categoryMother', '==', `${category}`]])
     }
 
+
     render() {
-        const { items } = this.props
-        console.log(items)
-        if (!items.isLoaded || items.data === null) {
+
+        const { categories } = this.props;
+
+        console.log(categories)
+        if (!categories.isLoaded || categories.data === null) {
             return (
                 <Loading />
-
             )
         }
 
-        if (items.error) {
+        if (categories.error) {
             return <div>
                 <ErrorPage />
             </div>
         }
+
         return (
-            <div className='container' >
+            <div className='container'>
                 <table className="allItemsTable table table-bordered">
                     <thead className="thead-dark">
                         <tr>
+                            <th scope="col ">number</th>
                             <th scope="col ">
                                 <div className='row pl-3 pr-3'>
                                     <input
@@ -86,7 +106,7 @@ class AllItemsPage extends Component {
                                         aria-label="Search"
                                     // onChange={this.onHandleChnage}
                                     ></input>
-                                    <button className="btn my-2 my-sm-0 search-btn" type="button" >
+                                    <button className="btn my-2 my-sm-0 search-btn" type="button" onClick={this.serchedItems}>
                                         <svg className="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
                                             <path fillRule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
@@ -102,29 +122,40 @@ class AllItemsPage extends Component {
                                     <option value="false">false</option>
                                 </select>
                             </th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">
+                                <select className="form-control form-control" id="exampleFormControlSelect1"
+                                    onChange={this.onCategoryChange} value={this.state.category}>
+                                    <option value="all">All</option>
+                                    {
+                                        this.state.category !== "all" ? <option value={this.state.category}>Show sub categories</option> : null
+
+                                    }
+                                    {
+                                        categories.data.map(item => (
+                                            <option key={item.id} value={item.id} >{item.title}</option>
+                                        ))
+                                    }
+
+                                </select>
+                            </th>
                             <th scope="col">Change</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-
-                            items.data.map(item => (
+                            categories.data.map((item, index) => (
                                 <tr key={item.id}>
+                                    <td>{index + 1}</td>
                                     <td>{item.title}</td>
                                     <td>{item.available === 'true' ? 'yes' : 'no'}  </td>
-                                    <td>{item.categoryId}</td>
-                                    <td>{`${item.price} rub`}</td>
+                                    <td>{item.categoryMother}</td>
                                     <td>
                                         <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Delete</button>
-                                        <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Edit</Link>
-                                        <Link to={`/card/${item.id}`} className="mr-2">Show</Link>
+                                        <Link to={`/admin/categoryEdit/${item.id}`} className="mr-2">Edit</Link>
+                                        {/* <Link to={`/card/${item.id}`} className="mr-2">Show</Link> */}
                                     </td>
                                 </tr>
-
                             ))
-
                         }
                     </tbody>
                 </table>
@@ -136,17 +167,17 @@ class AllItemsPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
+    // console.log(state)
     return {
-        items: state.item.list,
-        item: state.item.current,
+        categories: state.category.list,
+        category: state.category.current,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getItems: query => dispatch(fetchItems(query)),
-        deleteItem: query => dispatch(deleteItem(query)),
+        getCategories: query => dispatch(fetchCategories(query)),
+        deleteCategory: query => dispatch(deleteCategory(query)),
     };
 }
 
@@ -158,4 +189,5 @@ const enhance = compose(
     withRouter
 );
 
-export default enhance(AllItemsPage);
+export default enhance(AllCategoriesPage);
+

@@ -17,9 +17,9 @@ const AdminPage = () => {
                 </div>
                 <div className=' mb-3'>
                     <Link to='/admin/categoriesCreate' className="btn btn-dark col-3">Create Categories</Link>
-                </div> 
-                 <div className=' mb-3'>
-                    <Link to='/admin/categoriesChange' className="btn btn-dark col-3">Change Categories</Link>
+                </div>
+                <div className=' mb-3'>
+                    <Link to='/admin/allCategories' className="btn btn-dark col-3">All Categories </Link>
                 </div>
                 {/* <Link to=''></Link>
                 <Link to=''></Link>

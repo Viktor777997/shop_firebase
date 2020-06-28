@@ -12,6 +12,7 @@ export default class SlickSliderHomePage extends Component {
             slidesToShow: 3,
             dots: true,
             slidesToScroll: 1,
+
             responsive: [
                 {
                     breakpoint: 992,

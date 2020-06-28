@@ -2,50 +2,60 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchItem, createItem } from '../../store/actions/item';
+import { fetchItem, editItem } from '../../store/actions/item';
 import CreateItem from '../../Components/createItem'
+import Loading from '../../Components/loading';
+import ErrorPage from '../errorPage';
 
 class ItemEditPage extends Component {
 
     state = {
-        id:  this.props.match.params.id,
+        isDidAction: false
     }
+
 
     componentDidMount() {
-        this.props.getItem(this.state.id);
-      
+        this.loadData()
+
     }
-    // componentDidUpdate(prevProps, prevState) {
-        
-    //     if (prevProps!==this.props) {
-    //     this.props.getItem(this.state.id);
-            
-    //     }
-    // }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.isDidAction && !prevProps.item.isLoaded && this.props.item.isLoaded) {
+            this.setState({ isDidAction: false });
+            this.loadData()
+            this.props.history.push('/admin/allItems')
+        }
+    }
+
+    loadData = () => this.props.getItem(this.props.match.params.id);
+
+    handleEdit = (id, data) => {
+        console.log('ascascas', data)
+        this.props.editItem(id, data)
+        this.setState({ isDidAction: true })
+    }
 
     render() {
-        console.log(this.props)
-        const { item, createItem, getItem} = this.props
-
-
+        // console.log(this.props)
+        const { item, } = this.props;
+        console.log(item)
         if (!item.isLoaded || item.data === null) {
             return (
-                <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
+                <Loading />
             )
         }
 
 
         if (item.error) {
             return <div>
-                Error
-        </div>
+                <ErrorPage />
+            </div>
         }
         return (
             <div className='container'>
                 <CreateItem
-                    create={createItem}
+                    id={this.props.match.params.id}
+                    edit={this.handleEdit}
                     data={item.data}
                 />
             </div>
@@ -64,7 +74,7 @@ function mapDispatchToProps(dispatch) {
 
     return {
         getItem: (data) => dispatch(fetchItem(data)),
-        createItem: (data) => dispatch(createItem(data)),
+        editItem: (id, data) => dispatch(editItem(id, data)),
     };
 }
 

@@ -1,54 +1,103 @@
-import React from 'react';
+import React, { useEffect, Component } from 'react';
 import './Categories.scss'
 import OpenCategory from '../openCategory';
+import $ from 'jquery';
 
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { fetchCategories } from '../../store/actions/category';
 
-const Categories = () => {
+import { Link } from 'react-router-dom';
 
+class Categories extends Component {
 
-  return (
-    <div className="categories">
-      <button className="btn btn-dark submenubtn category-open-btn">
-        <span className="menuBtnName">
-          Menu
+  componentDidMount() {
+    this.props.getCategories([['categoryMother', '==', ''], ['available', '==', 'true']])
+    // this.props.getCategories()
+    $(document).ready(function () {
+      $('.category-open-btn').click(function () {
+        $('body').toggleClass('menu-btn-clicked');
+        $('body').toggleClass(' hovred');
+        $('.firstLine').toggleClass('firstLineX');
+        $('.secondLine').toggleClass('secondLineX');
+        $('.thirdLine').toggleClass('thirdLineX');
+        console.log('ascasc')
+      });
+      $('.categories_li').hover(
+        function () {
+          // over
+          $('body').addClass(' hovred');
+        },
+        function () {
+          $('body').removeClass(' hovred');
+        }
+      );
+    });
+    $(document).click(function (e) {
+      let target = e.target;
+      if (!$(target).is('.categories') && !$(target).parents().is('.categories')) {
+        $('body').removeClass(' hovred');
+        $('body').removeClass(' menu-btn-clicked');
+        $('.categories_li').removeClass(' li_clicked');
+        $('.firstLine').removeClass('firstLineX');
+        $('.secondLine').removeClass('secondLineX');
+        $('.thirdLine').removeClass('thirdLineX');
+      }
+    });
+  }
+
+  render() {
+    const { categories } = this.props;
+    console.log(categories)
+    return (
+      <div className="categories">
+        <button className="btn btn-dark submenubtn category-open-btn">
+          <span className="menuBtnName">
+            Menu
         </span>
-        <div>
-          <span className="firstLine"></span>
-          <span className="secondLine"></span>
-          <span className="thirdLine"></span>
-        </div>
+          <div>
+            <span className="firstLine"></span>
+            <span className="secondLine"></span>
+            <span className="thirdLine"></span>
+          </div>
+        </button>
 
-      </button>
-
-      <ul className="categories_ul">
-        <li className="categories_li">
-          <a className="categories_a">Category 1a</a>
-          <OpenCategory />
-        </li>
-        <li className="categories_li">
-          <a className="categories_a">Category 1a</a>
-          <OpenCategory />
-        </li>
-        <li className="categories_li">
-          <a className="categories_a">Category 1a</a>
-          <OpenCategory />
-        </li>
-        <li className="categories_li">
-          <a className="categories_a">Category 1a</a>
-          <OpenCategory />
-        </li>
-        <li className="categories_li">
-          <a className="categories_a">Category 1a</a>
-          <OpenCategory />
-        </li>
-        <li className="categories_li">
-          <a className="categories_a">Category 1a</a>
-          <OpenCategory />
-        </li>
-
-      </ul>
-    </div>
-  );
+        <ul className="categories_ul">
+          {
+            categories.data.map(item => (
+              <li className="categories_li" key={item.id}>
+                <a className="categories_a" >{item.title}</a>
+                <OpenCategory motherId={item.id} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    );
+  }
 }
 
-export default Categories;
+
+function mapStateToProps(state) {
+  // console.log(state)
+  return {
+    categories: state.category.list,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getCategories: query => dispatch(fetchCategories(query)),
+  };
+}
+
+const enhance = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withRouter
+);
+
+export default enhance(Categories);

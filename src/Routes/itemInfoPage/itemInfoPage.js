@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import { fetchItem } from '../../store/actions/item';
 import './itemInfoPage.scss'
 import BuyItem from '../../Components/buyItem';
+import Loading from '../../Components/loading';
+import ErrorPage from '../errorPage';
 
 class ItemInfoPage extends Component {
 
@@ -14,20 +16,18 @@ class ItemInfoPage extends Component {
         this.props.getItem(this.props.match.params.id);
     }
     render() {
-        // console.log(this.props)
         const { item } = this.props
+        console.log(item)
 
         if (!item.isLoaded || item.data === null) {
             return (
-                <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
+                <Loading />
             )
         }
 
         if (item.error) {
             return <div>
-                Error
+                <ErrorPage />
             </div>
         }
 
@@ -38,7 +38,7 @@ class ItemInfoPage extends Component {
                 </div>
                 <div className="item-gen-div row">
                     <div className="item-info col-6">
-                        <img src={item.data.images}></img>
+                        <img alt="img" src={item.data.image}></img>
                         <p>{item.data.text}</p>
                     </div>
                     <div className="item-right-div col">

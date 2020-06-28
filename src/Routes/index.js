@@ -11,12 +11,15 @@ import LoginPage from './loginPage';
 import ItemCreatePage from './itemCreatePage'
 import ItemEditPage from './itemEditPage';
 import CategoriesCreatePage from './categoriesCreatePage';
-import CategoriesChangePage from './allItemsPage';
+import AllCategoriesPage from './allCategoriesPage';
 import ItemInfoPage from './itemInfoPage';
 import AdminPage from './adminPage';
 import AllItemsPage from './allItemsPage';
 
 import { RouteWithMainLayout } from '../Layout';
+import categoryEditPage from './categoryEditPage/categoryEditPage';
+import CtdSerchedItems from './ctdSerchedItems';
+import ErrorPage from './errorPage';
 
 const App = (props) => {
   return (
@@ -28,13 +31,16 @@ const App = (props) => {
           <RouteWithMainLayout path="/price" component={PricePage} exact />
           <RouteWithMainLayout path="/contact" component={ContactPage} exact />
           <RouteWithMainLayout path="/card/:id" component={ItemInfoPage} exact />
+          <RouteWithMainLayout path="/ctd/:id" component={CtdSerchedItems} exact />
           <RouteWithMainLayout path="/admin" component={AdminPage} exact />
           <RouteWithMainLayout path="/admin/login" component={LoginPage} exact />
-          <RouteWithMainLayout path="/admin/allItems" component={AllItemsPage} exact/>
-          <RouteWithMainLayout path="/admin/itemCreate" component={ItemCreatePage} exact/>
-          <RouteWithMainLayout path="/admin/itemEdit/:id" component={ItemEditPage} exact/>
+          <RouteWithMainLayout path="/admin/allItems" component={AllItemsPage} exact />
+          <RouteWithMainLayout path="/admin/itemCreate" component={ItemCreatePage} exact />
+          <RouteWithMainLayout path="/admin/itemEdit/:id" component={ItemEditPage} exact />
+          <RouteWithMainLayout path="/admin/categoryEdit/:id" component={categoryEditPage} exact />
           <RouteWithMainLayout path="/admin/categoriesCreate" component={CategoriesCreatePage} exact />
-          <RouteWithMainLayout path="/admin/categoriesChange" component={CategoriesChangePage} exact />
+          <RouteWithMainLayout path="/admin/allcategories" component={AllCategoriesPage} exact />
+          <RouteWithMainLayout component={ErrorPage} />
         </Switch>
       </ConnectedRouter>
     </ReduxProvider>

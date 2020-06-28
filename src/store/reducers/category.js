@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/item';
+import * as actionTypes from '../actions/category';
 
 const initialState = {
   current: {
@@ -15,8 +15,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    /*  GET ITEMS PART  */
-    case actionTypes.FETCH_ITEMS_REQUEST: {
+
+    /*  GET CATEGORIES PART  */
+    case actionTypes.FETCH_CATEGORIES_REQUEST: {
       return {
         ...state,
         list: {
@@ -26,7 +27,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.FETCH_ITEMS_FAILURE: {
+    case actionTypes.FETCH_CATEGORIES_FAILURE: {
       return {
         ...state,
         list: {
@@ -36,7 +37,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.FETCH_ITEMS_SUCCESS: {
+    case actionTypes.FETCH_CATEGORIES_SUCCESS: {
       return {
         ...state,
         list: {
@@ -48,8 +49,8 @@ export default (state = initialState, action) => {
       };
     }
 
-    /*  GET ITEM PART  */
-    case actionTypes.FETCH_ITEM_REQUEST: {
+    /*  GET CATEGORY PART  */
+    case actionTypes.FETCH_CATEGORY_REQUEST: {
       return {
         ...state,
         current: {
@@ -59,7 +60,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.FETCH_ITEM_FAILURE: {
+    case actionTypes.FETCH_CATEGORY_FAILURE: {
       return {
         ...state,
         current: {
@@ -69,7 +70,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.FETCH_ITEM_SUCCESS: {
+    case actionTypes.FETCH_CATEGORY_SUCCESS: {
       return {
         ...state,
         current: {
@@ -81,11 +82,11 @@ export default (state = initialState, action) => {
       };
     }
 
-    /* CREATE AND DELETE ITEM PART */
+    /* CREATE AND DELETE CATEGORY PART */
 
-    case actionTypes.CREATE_ITEM_REQUEST:
-    case actionTypes.EDIT_ITEM_REQUEST:
-    case actionTypes.DELETE_ITEM_REQUEST: {
+    case actionTypes.CREATE_CATEGORY_REQUEST:
+    case actionTypes.EDIT_CATEGORY_REQUEST:
+    case actionTypes.DELETE_CATEGORY_REQUEST: {
       return {
         ...state,
         current: {
@@ -96,9 +97,9 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.CREATE_ITEM_SUCCESS:
-    case actionTypes.EDIT_ITEM_SUCCESS:
-    case actionTypes.DELETE_ITEM_SUCCESS: {
+    case actionTypes.CREATE_CATEGORY_SUCCESS:
+    case actionTypes.EDIT_CATEGORY_SUCCESS:
+    case actionTypes.DELETE_CATEGORY_SUCCESS: {
       return {
         ...state,
         current: {
@@ -109,9 +110,9 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case actionTypes.CREATE_ITEM_FAILURE:
-    case actionTypes.EDIT_ITEM_FAILURE:
-    case actionTypes.DELETE_ITEM_FAILURE: {
+    case actionTypes.CREATE_CATEGORY_FAILURE:
+    case actionTypes.EDIT_CATEGORY_FAILURE:
+    case actionTypes.DELETE_CATEGORY_FAILURE: {
       return {
         ...state,
         current: {
