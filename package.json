@@ -14,7 +14,7 @@
     "yarn": "1.22.x"
   },
   "dependencies": {
-    "connected-react-router": "6.8.0",
+    "connected-react-router": "6.5.2",
     "firebase": "6.3.0",
     "history": "5.0.0",
     "jquery": "3.5.1",

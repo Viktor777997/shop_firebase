@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 
 import { routerMiddleware } from 'connected-react-router';
 
-import { createBrowserHistory, createHashHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 import createRootReducer from '../store/reducers';
 
@@ -13,7 +13,7 @@ import { getFirebase, reactReduxFirebase } from 'react-redux-firebase';
 
 import firebaseConfig from './firebase';
 
-export const history = createHashHistory();
+export const history = createBrowserHistory();
 
 function configureStore(preloadedState) {
   const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
