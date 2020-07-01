@@ -43,12 +43,10 @@ class OpenCategory extends Component {
     render() {
         const { categories } = this.state;
 
-        console.log("categories: ", categories)
 
         if (!categories.loaded || !categories.data) {
-            return "loading"
+            return null
         }
-
         return (
             <div className="open-category">
                 <ul className="categories_ul">
@@ -68,7 +66,6 @@ class OpenCategory extends Component {
 }
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         categories: state.category.list,
     };
