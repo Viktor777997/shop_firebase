@@ -10,6 +10,7 @@ import categoryReducer from './category';
 
 const rootReducer = history =>
   combineReducers({
+    router: connectRouter(history),
     firestore: firestoreReducer,
     firebase: firebaseReducer,
 
@@ -17,7 +18,6 @@ const rootReducer = history =>
     user: userReducer,
     item: itemReducer,
     category: categoryReducer,
-    router: connectRouter(history),
   });
 
 export default rootReducer;

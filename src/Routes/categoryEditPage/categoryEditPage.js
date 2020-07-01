@@ -34,8 +34,7 @@ class CategoryEditPage extends Component {
 
     render() {
         const { category, categories } = this.props;
-        // console.log(category)
-        if (!category.isLoaded || category.data === null || !categories.isLoaded || categories.data === null) {
+        if (!category.isLoaded || !category.data || !categories.isLoaded || !categories.data) {
             return (
                 <Loading />
             )
@@ -61,7 +60,6 @@ class CategoryEditPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         categories: state.category.list,
         category: state.category.current,

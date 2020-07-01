@@ -1,10 +1,23 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import './SlickSliderHomePage.scss';
+import { compose } from 'redux';
+import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { fetchSlideItems } from '../../store/actions/item';
+import Loading from '../loading'
+import ErrorPage from "../../Routes/errorPage";
 
-export default class SlickSliderHomePage extends Component {
+class SlickSliderHomePage extends Component {
+    componentDidMount() {
+
+        this.props.getItems([['available', '==', 'true'], ['slideItem', '==', 'true']]);
+    }
+
     render() {
+        const { items } = this.props;
         const settings = {
             infinite: true,
             // autoplay: true,
@@ -40,48 +53,58 @@ export default class SlickSliderHomePage extends Component {
                 },
             ]
         };
+
+        if (!items.isLoaded || !items.data) {
+            return (
+                <Loading />
+            )
+        }
+
+
+        if (items.error) {
+            return <div>
+                <ErrorPage />
+            </div>
+        }
         return (
             <div>
                 <Slider {...settings}>
+                    {
+                        items.data.map(item => (
+                            <div className="slide-pages" key={item.id}>
+                                <Link to={`/card/${item.id}`}>
+                                    <img src={item.image}
+                                        alt=""></img>
+                                </Link>
+                            </div>
 
-                    <div className="slide-pages">
-                        <a href="">
-                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                alt=""></img>
-                        </a>
-                    </div>
-                    <div className="slide-pages">
-                        <a href="">
-                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                alt=""></img>
-                        </a>
-                    </div>
-                    <div className="slide-pages">
-                        <a href="">
-                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                alt=""></img>
-                        </a>
-                    </div>
-                    <div className="slide-pages">
-                        <a href="">
-                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                alt=""></img>
-                        </a>
-                    </div>
-                    <div className="slide-pages">
-                        <a href="">
-                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                alt=""></img>
-                        </a>
-                    </div>
-                    <div className="slide-pages">
-                        <a href="">
-                            <img src="https://irantourismnews.com/wp-content/uploads/2017/04/Isfahan-Tourism-28-1.jpg"
-                                alt=""></img>
-                        </a>
-                    </div>
+                        ))
+                    }
                 </Slider>
             </div>
         );
     }
 }
+
+
+function mapStateToProps(state) {
+    return {
+        items: state.item.slideItem,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getItems: query => dispatch(fetchSlideItems(query)),
+    };
+}
+
+const enhance = compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withRouter
+);
+
+export default enhance(SlickSliderHomePage);

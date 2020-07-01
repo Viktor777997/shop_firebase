@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+
 import './PricePage.scss'
 
 class PricePage extends Component {
     render() {
-        console.log(this.props)
 
         return (
 
@@ -15,7 +15,7 @@ class PricePage extends Component {
                 </div>
                 <div className="prices-div">
                     <ul>
-                        <li><a href="">Exel file</a></li>
+                        <li><a href="/New Лист Microsoft Excel.xlsx" target="_blank" download>Excel File</a></li>
                         <li><a href="">Exel file</a></li>
                         <li><a href="">Exel file</a></li>
                         <li><a href="">Exel file</a></li>

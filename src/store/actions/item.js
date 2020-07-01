@@ -14,6 +14,10 @@ export const FETCH_ITEM_REQUEST = 'FETCH_ITEM_REQUEST';
 export const FETCH_ITEM_SUCCESS = 'FETCH_ITEM_SUCCESS';
 export const FETCH_ITEM_FAILURE = 'FETCH_ITEM_FAILURE';
 
+export const FETCH_SLIDEITEM_REQUEST = 'FETCH_SLIDEITEM_REQUEST';
+export const FETCH_SLIDEITEM_SUCCESS = 'FETCH_SLIDEITEM_SUCCESS';
+export const FETCH_SLIDEITEM_FAILURE = 'FETCH_SLIDEITEM_FAILURE';
+
 export const CREATE_ITEM_REQUEST = 'CREATE_ITEM_REQUEST';
 export const CREATE_ITEM_SUCCESS = 'CREATE_ITEM_SUCCESS';
 export const CREATE_ITEM_FAILURE = 'CREATE_ITEM_FAILURE';
@@ -30,17 +34,31 @@ export const DELETE_ITEM_FAILURE = 'DELETE_ITEM_FAILURE';
  * THUNKS
  */
 
-export const fetchItems = query => (dispatch, getState, { getFirebase, getFirestore }) => {
+export const fetchItems = (query, limit) => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
 
   dispatch(createAction(FETCH_ITEMS_REQUEST));
 
-  Api.getItems(query)
+  Api.getItems(query, limit)
     .then(payload => {
       dispatch(createAction(FETCH_ITEMS_SUCCESS, payload));
     })
     .catch(payload => {
       dispatch(createAction(FETCH_ITEMS_FAILURE, ErrorService.parse(payload)));
+    });
+};
+
+export const fetchSlideItems = query => (dispatch, getState, { getFirebase, getFirestore }) => {
+  const Api = new ApiService(getFirestore(), getFirebase());
+
+  dispatch(createAction(FETCH_SLIDEITEM_REQUEST));
+
+  Api.getItems(query)
+    .then(payload => {
+      dispatch(createAction(FETCH_SLIDEITEM_SUCCESS, payload));
+    })
+    .catch(payload => {
+      dispatch(createAction(FETCH_SLIDEITEM_FAILURE, ErrorService.parse(payload)));
     });
 };
 
@@ -61,7 +79,6 @@ export const fetchItem = id => (dispatch, getState, { getFirebase, getFirestore 
 export const createItem = data => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
   dispatch(createAction(CREATE_ITEM_REQUEST));
-  console.log(data)
   Api.createItem(data)
     .then(payload => {
       dispatch(createAction(CREATE_ITEM_SUCCESS, payload.data));
@@ -73,8 +90,6 @@ export const createItem = data => (dispatch, getState, { getFirebase, getFiresto
 
 export const editItem = (id, data) => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
-  console.log(id)
-  console.log(data)
   dispatch(createAction(EDIT_ITEM_REQUEST));
   Api.updateItem(id, data)
     .then(payload => {

@@ -31,7 +31,7 @@ export const DELETE_CATEGORY_FAILURE = 'DELETE_CATEGORY_FAILURE';
 
 
 /**
- * THUNKS
+ * THUNKSzzz
  */
 export const fetchCategory = id => (dispatch, getState, { getFirebase, getFirestore }) => {
     const Api = new ApiService(getFirestore(), getFirebase());
@@ -46,6 +46,7 @@ export const fetchCategory = id => (dispatch, getState, { getFirebase, getFirest
             dispatch(createAction(FETCH_CATEGORY_FAILURE, ErrorService.parse(payload)));
         });
 };
+
 
 export const fetchCategories = query => (dispatch, getState, { getFirebase, getFirestore }) => {
     const Api = new ApiService(getFirestore(), getFirebase());
@@ -65,7 +66,6 @@ export const fetchCategories = query => (dispatch, getState, { getFirebase, getF
 export const createCategory = data => (dispatch, getState, { getFirebase, getFirestore }) => {
     const Api = new ApiService(getFirestore(), getFirebase());
     dispatch(createAction(CREATE_CATEGORY_REQUEST));
-    console.log(data)
     Api.createCategory(data)
         .then(payload => {
             dispatch(createAction(CREATE_CATEGORY_SUCCESS, payload.data));
@@ -74,6 +74,9 @@ export const createCategory = data => (dispatch, getState, { getFirebase, getFir
             dispatch(createAction(CREATE_CATEGORY_FAILURE, ErrorService.parse(payload)));
         });
 };
+
+
+
 
 export const editCategory = (id, data) => (dispatch, getState, { getFirebase, getFirestore }) => {
     const Api = new ApiService(getFirestore(), getFirebase());

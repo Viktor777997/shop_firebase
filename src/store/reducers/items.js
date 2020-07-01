@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/item';
 
 const initialState = {
   current: {
-    isLoaded: false,
+    isLoaded: true,
     error: null,
     data: null,
   },
@@ -11,6 +11,11 @@ const initialState = {
     error: null,
     data: [],
   },
+  slideItem: {
+    isLoaded: true,
+    error: null,
+    data: [],
+  }
 };
 
 export default (state = initialState, action) => {
@@ -59,6 +64,7 @@ export default (state = initialState, action) => {
         },
       };
     }
+
     case actionTypes.FETCH_ITEM_FAILURE: {
       return {
         ...state,
@@ -80,6 +86,43 @@ export default (state = initialState, action) => {
         },
       };
     }
+
+
+    // Slide Items
+
+    case actionTypes.FETCH_SLIDEITEM_REQUEST: {
+      return {
+        ...state,
+        slideItem: {
+          ...state.list,
+          isLoaded: false,
+          error: null,
+        },
+      };
+    }
+    case actionTypes.FETCH_SLIDEITEM_FAILURE: {
+      return {
+        ...state,
+        slideItem: {
+          ...state.list,
+          isLoaded: true,
+          error: action.payload,
+        },
+      };
+    }
+    case actionTypes.FETCH_SLIDEITEM_SUCCESS: {
+      return {
+        ...state,
+        slideItem: {
+          ...state.list,
+          data: action.payload,
+          isLoaded: true,
+          error: null,
+        },
+      };
+    }
+
+
 
     /* CREATE AND DELETE ITEM PART */
 

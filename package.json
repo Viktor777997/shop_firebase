@@ -10,11 +10,11 @@
     "url": "https://github.com/Viktor777997/shop_firebase/issues"
   },
   "engines": {
-    "node": "12.18.x",
+    "node": "12.x",
     "yarn": "1.22.x"
   },
   "dependencies": {
-    "connected-react-router": "6.8.0",
+    "connected-react-router": "6.5.2",
     "firebase": "6.3.0",
     "history": "5.0.0",
     "jquery": "3.5.1",
@@ -25,8 +25,8 @@
     "react-lazy-load": "3.0.13",
     "react-redux": "7.2.0",
     "react-redux-firebase": "2.3.0",
-    "react-router": "5.2.0",
-    "react-router-dom": "5.2.0",
+    "react-router": "5.0.1",
+    "react-router-dom": "5.0.1",
     "react-scripts": "3.4.1",
     "react-slick": "0.26.1",
     "reactstrap": "8.5.1",

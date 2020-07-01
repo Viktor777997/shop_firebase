@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/category';
 
 const initialState = {
   current: {
-    isLoaded: false,
+    isLoaded: true,
     error: null,
     data: null,
   },
@@ -11,6 +11,8 @@ const initialState = {
     error: null,
     data: [],
   },
+
+
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +50,10 @@ export default (state = initialState, action) => {
         },
       };
     }
+
+
+
+
 
     /*  GET CATEGORY PART  */
     case actionTypes.FETCH_CATEGORY_REQUEST: {

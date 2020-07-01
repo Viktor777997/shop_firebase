@@ -18,36 +18,14 @@ class CreateCategory extends Component {
                 categoryMother: '',
             }
         }
-
     }
-
 
     onChange = (e) => {
 
-        console.log(e.target.value, e.target)
 
         return this.setState({
             [e.target.name]: e.target.value,
         })
-
-
-        // switch (e.target.name) {
-        //     case 'available':
-        //         return this.setState({
-        //             available: e.target.value,
-        //         })
-        //     case 'categoryMother':
-        //         return this.setState({
-        //             categoryMother: e.target.value,
-        //         })
-        //     case 'title':
-        //         return this.setState({
-        //             title: e.target.value,
-        //         })
-        //     default:
-        //         break;
-
-        // }
     }
     onSubmit = (e) => {
         if (this.props.data) {
@@ -58,13 +36,15 @@ class CreateCategory extends Component {
         else {
             this.props.createCategory(this.state)
             alert('category created')
-            setTimeout(() => location.reload(), 1000)
+            // setTimeout(() => window.location.reload(), 1)
         }
         e.preventDefault();
     }
 
     render() {
+
         const { data, categories } = this.props;
+
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
@@ -78,7 +58,7 @@ class CreateCategory extends Component {
 
                 <div className="form-group">
                     <label htmlFor="exampleFormControlSelect1" name='available'>category mother</label>
-                    <select className="form-control form-control" id="exampleFormControlSelect1" name='categoryMother'
+                    <select className="form-control form-control" id="exampleFormControlSelect2" name='categoryMother'
                         onChange={this.onChange} value={this.state.categoryMother}>
                         <option value="">Create as category</option>
                         {
@@ -91,7 +71,7 @@ class CreateCategory extends Component {
 
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">New Category</label>
-                    <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Category Name" name='title'
+                    <input type="text" className="form-control" id="exampleInputPassword2" placeholder="Category Name" name='title'
                         onChange={this.onChange} value={this.state.title} />
                 </div>
 

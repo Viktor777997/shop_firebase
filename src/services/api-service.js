@@ -8,10 +8,10 @@ class ApiService {
 
 
   // items
-  getItems = async (query = []) => {
+  getItems = async (query = [], limit = 10000) => {
     let resp = this._firestore.collection('items').orderBy('createDate', 'desc');
     query.forEach(value => {
-      resp = resp.where(...value);
+      resp = resp.where(...value).limit(limit);
     });
 
     resp = await resp.get();
@@ -28,7 +28,8 @@ class ApiService {
     return { id, ...resp.data() };
   };
 
-  createItem = async ({ title, text, categoryId, price, available, image } = {}) => {
+  createItem = async ({ title, text, categoryId, price, available, slideItem, image } = {}) => {
+
     const fileName = `${makeId(10)}.${getExtension(image.name)}`;
 
     let resp = await this._firebase.uploadFile('/images', image, undefined, {
@@ -46,6 +47,7 @@ class ApiService {
       title,
       text,
       price,
+      slideItem,
       available,
       categoryId,
     });
@@ -53,27 +55,25 @@ class ApiService {
     return resp;
   };
 
-  updateItem = async (id = null, { title, text, price, available, categoryId, image }) => {
+  updateItem = async (id = null, { title, text, price, available, slideItem, categoryId, image }) => {
     const doc = await this._firestore.collection('items').doc(id);
-    console.log(id)
     const data = {
       title,
       text,
       price,
+      slideItem,
       available,
       categoryId
     }
-    console.log(image)
     if (image) {
       const fileName = `${makeId(10)}.${getExtension(image.name)}`;
-      console.log('data')
 
       let resp = await this._firebase.uploadFile('/images', image, undefined, {
         name: fileName,
       });
 
       data.imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
-      data.thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
+      data.thumbUrl = data.imgUrl.replace(fileName, `thumb-400-${fileName}`);
     }
 
 
@@ -103,6 +103,7 @@ class ApiService {
   // categories
 
 
+
   getCategories = async (query = []) => {
     let resp = this._firestore.collection('categories').orderBy('createDate', 'desc');
     query.forEach(value => {
@@ -129,9 +130,6 @@ class ApiService {
       title,
       available,
     });
-
-    console.log("resp: ", resp)
-
     return resp
   };
   updateCategory = async (id = null, { title, available, categoryMother }) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react';
+import React, { Component } from 'react';
 import './Categories.scss'
 import OpenCategory from '../openCategory';
 import $ from 'jquery';
@@ -8,13 +8,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchCategories } from '../../store/actions/category';
 
-import { Link } from 'react-router-dom';
-
 class Categories extends Component {
 
   componentDidMount() {
     this.props.getCategories([['categoryMother', '==', ''], ['available', '==', 'true']])
-    // this.props.getCategories()
     $(document).ready(function () {
       $('.category-open-btn').click(function () {
         $('body').toggleClass('menu-btn-clicked');
@@ -22,7 +19,6 @@ class Categories extends Component {
         $('.firstLine').toggleClass('firstLineX');
         $('.secondLine').toggleClass('secondLineX');
         $('.thirdLine').toggleClass('thirdLineX');
-        console.log('ascasc')
       });
       $('.categories_li').hover(
         function () {
@@ -49,7 +45,6 @@ class Categories extends Component {
 
   render() {
     const { categories } = this.props;
-    console.log(categories)
     return (
       <div className="categories">
         <button className="btn btn-dark submenubtn category-open-btn">
@@ -80,7 +75,6 @@ class Categories extends Component {
 
 
 function mapStateToProps(state) {
-  // console.log(state)
   return {
     categories: state.category.list,
   };

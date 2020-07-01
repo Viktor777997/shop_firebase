@@ -24,7 +24,7 @@ class AllCategoriesPage extends Component {
 
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.isDidAction && !prevProps.category.isLoaded && this.props.category.isLoaded || this.state.category !== prevState.category) {
+        if ((this.state.isDidAction && !prevProps.category.isLoaded && this.props.category.isLoaded) || (this.state.category !== prevState.category)) {
             this.loadData()
             this.setState({ isDidAction: false });
         }
@@ -33,7 +33,7 @@ class AllCategoriesPage extends Component {
 
     loadData = () => {
         if (this.state.category === 'all') {
-            return this.props.getCategories([['categoryMother', '==', ``]])
+            return this.props.getCategories()
         }
         return this.props.getCategories([['categoryMother', '==', `${this.state.category}`]])
     }
@@ -46,14 +46,11 @@ class AllCategoriesPage extends Component {
     }
 
     serchedItems = () => {
-        console.log('ascsc')
         this.loadData()
-        // this.props.getItems([['title', '>=', 'b']]);
     }
 
     onAvailableChange = (e) => {
         const available = e.target.value;
-        console.log(available)
         this.setState(state => ({ ...state, available }));
         if (available === 'true') {
             return this.props.getCategories([['available', '==', "true"]]);
@@ -65,12 +62,8 @@ class AllCategoriesPage extends Component {
     }
     onCategoryChange = (e) => {
         const category = e.target.value;
-        console.log("category: ", category)
         this.setState(state => ({ ...state, category }));
-        // if (category === 'all') {
-        //     return this.props.getCategories()
-        // }
-        // return this.props.getCategories([['categoryMother', '==', `${category}`]])
+
     }
 
 
@@ -78,8 +71,8 @@ class AllCategoriesPage extends Component {
 
         const { categories } = this.props;
 
-        console.log(categories)
-        if (!categories.isLoaded || categories.data === null) {
+
+        if (!categories.isLoaded || !categories.data) {
             return (
                 <Loading />
             )
@@ -96,7 +89,6 @@ class AllCategoriesPage extends Component {
                 <table className="allItemsTable table table-bordered">
                     <thead className="thead-dark">
                         <tr>
-                            <th scope="col ">number</th>
                             <th scope="col ">
                                 <div className='row pl-3 pr-3'>
                                     <input
@@ -115,7 +107,7 @@ class AllCategoriesPage extends Component {
                                 </div>
                             </th>
                             <th scope="col">
-                                <select className="form-control form-control" id="exampleFormControlSelect1"
+                                <select className="form-control form-control" id="exampleFormControlSelect6"
                                     onChange={this.onAvailableChange} value={this.state.available}>
                                     <option value="all">All</option>
                                     <option value="true">true</option>
@@ -123,16 +115,15 @@ class AllCategoriesPage extends Component {
                                 </select>
                             </th>
                             <th scope="col">
-                                <select className="form-control form-control" id="exampleFormControlSelect1"
+                                <select className="form-control form-control" id="exampleFormControlSelect7"
                                     onChange={this.onCategoryChange} value={this.state.category}>
                                     <option value="all">All</option>
                                     {
-                                        this.state.category !== "all" ? <option value={this.state.category}>Show sub categories</option> : null
-
+                                        this.state.category !== "all" ? <option value={this.state.category}>Showed sub categories</option> : null
                                     }
                                     {
                                         categories.data.map(item => (
-                                            <option key={item.id} value={item.id} >{item.title}</option>
+                                            item.categoryMother !== "" ? null : <option key={item.id} value={item.id} > {item.title} </option>
                                         ))
                                     }
 
@@ -143,12 +134,11 @@ class AllCategoriesPage extends Component {
                     </thead>
                     <tbody>
                         {
-                            categories.data.map((item, index) => (
+                            categories.data.map((item) => (
                                 <tr key={item.id}>
-                                    <td>{index + 1}</td>
                                     <td>{item.title}</td>
                                     <td>{item.available === 'true' ? 'yes' : 'no'}  </td>
-                                    <td>{item.categoryMother}</td>
+                                    <td>{item.categoryMother === '' ? 'it is mother category' : null}</td>
                                     <td>
                                         <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Delete</button>
                                         <Link to={`/admin/categoryEdit/${item.id}`} className="mr-2">Edit</Link>
@@ -160,14 +150,13 @@ class AllCategoriesPage extends Component {
                     </tbody>
                 </table>
 
-            </div>
+            </div >
         );
     }
 
 }
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         categories: state.category.list,
         category: state.category.current,

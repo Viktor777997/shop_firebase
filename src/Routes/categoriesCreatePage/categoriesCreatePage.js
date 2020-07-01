@@ -14,7 +14,6 @@ class CategoriesCreatePage extends Component {
 
     render() {
         const { categories, createCategory } = this.props
-        // console.log(this.props.categories)
         return (
             <div className='container'>
                 <CreateCategory
@@ -26,7 +25,6 @@ class CategoriesCreatePage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         categories: state.category.list,
     };
