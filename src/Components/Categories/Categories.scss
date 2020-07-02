@@ -62,7 +62,8 @@
 
         &::after {
             content: '';
-            transition: .2s;
+
+            // transition: .2s;
             position: relative;
             margin: auto 0;
             width: 18px;

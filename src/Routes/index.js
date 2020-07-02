@@ -3,6 +3,7 @@ import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Switch } from 'react-router-dom';
+import { RouteWithMainLayout } from '../Layout';
 
 import HomePage from './HomePage';
 import ContactPage from './ContactPage';
@@ -15,11 +16,10 @@ import AllCategoriesPage from './allCategoriesPage';
 import ItemInfoPage from './itemInfoPage';
 import AdminPage from './adminPage';
 import AllItemsPage from './allItemsPage';
-
-import { RouteWithMainLayout } from '../Layout';
 import categoryEditPage from './categoryEditPage/categoryEditPage';
 import CtdSerchedItems from './ctdSerchedItems';
 import ErrorPage from './errorPage';
+
 
 const App = (props) => {
   return (

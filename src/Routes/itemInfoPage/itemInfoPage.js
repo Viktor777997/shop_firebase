@@ -16,10 +16,9 @@ class ItemInfoPage extends Component {
         this.props.getItem(this.props.match.params.id);
     }
     render() {
-        const { item } = this.props
-        console.log(item)
+        const { item } = this.props;
 
-        if (!item.isLoaded || item.data === null) {
+        if (!item.isLoaded || !item.data) {
             return (
                 <Loading />
             )
@@ -53,7 +52,6 @@ class ItemInfoPage extends Component {
 
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         item: state.item.current,
     };

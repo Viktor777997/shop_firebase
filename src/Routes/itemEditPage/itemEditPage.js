@@ -30,16 +30,13 @@ class ItemEditPage extends Component {
     loadData = () => this.props.getItem(this.props.match.params.id);
 
     handleEdit = (id, data) => {
-        console.log('ascascas', data)
         this.props.editItem(id, data)
         this.setState({ isDidAction: true })
     }
 
     render() {
-        // console.log(this.props)
         const { item, } = this.props;
-        console.log(item)
-        if (!item.isLoaded || item.data === null) {
+        if (!item.isLoaded || !item.data) {
             return (
                 <Loading />
             )
@@ -64,7 +61,6 @@ class ItemEditPage extends Component {
 }
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         item: state.item.current,
     };

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
 import { fetchCategory } from '../../store/actions/category';
-import { Link } from 'react-router-dom';
 import Loading from '../../Components/loading';
 import AllCards from '../../Components/allCards';
 import ErrorPage from '../errorPage';
@@ -13,18 +12,16 @@ import ErrorPage from '../errorPage';
 class CtdSerchedItems extends Component {
 
     componentDidMount() {
-
-        this.props.getCategory(this.props.match.params.id)
-        this.props.getItems([['available', '==', 'true'], ['categoryId', '==', `${this.props.match.params.id}`]]);
+        const id = this.props.match.params.id;
+        this.props.getCategory(id)
+        this.props.getItems([['available', '==', 'true'], ['categoryId', '==', id]]);
 
     }
 
     render() {
         const { items, category } = this.props;
 
-        console.log(category)
-
-        if (!items.isLoaded || items.data === null || !category.isLoaded || category.data === null) {
+        if (!items.isLoaded || !items.data || !category.isLoaded || !category.data) {
             return (
                 <Loading />
             )
@@ -59,7 +56,6 @@ class CtdSerchedItems extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         category: state.category.current,
         items: state.item.list,
@@ -68,7 +64,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getCategory: (data) => dispatch(fetchCategory(data)),
+        getCategory: (id) => dispatch(fetchCategory(id)),
         getItems: query => dispatch(fetchItems(query)),
     };
 }

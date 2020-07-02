@@ -12,19 +12,21 @@ class CreateItem extends Component {
     constructor(props) {
         super(props)
         if (this.props.data) {
-            const { available, categoryId, title, price, text } = this.props.data
+            const { available, categoryId, title, price, text, slideItem } = this.props.data
             this.state = {
                 available,
                 categoryId,
                 title,
+                slideItem,
                 price,
                 text,
-                image: null,
+                image: '',
             }
         }
         else {
             this.state = {
                 available: 'true',
+                slideItem: 'false',
                 categoryId: '',
                 title: '',
                 price: '',
@@ -35,11 +37,10 @@ class CreateItem extends Component {
     }
 
     componentDidMount() {
-        this.props.getCategories([['categoryMother', '==', ''], ['available', '==', 'true']])
+        this.props.getCategories([['available', '==', 'true']])
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                console.log(reader.onload)
                 reader.onload = function (e) {
                     $('.choosedPhoto').attr('src', e.target.result);
                 }
@@ -65,42 +66,14 @@ class CreateItem extends Component {
         })(e.target);
 
         return this.setState({
-            [name]: [value],
+            [name]: value,
         });
-
-        // switch (e.target.name) {
-        //     case 'available':
-        //         return this.setState({
-        //             available: e.target.value,
-        //         })
-        //     case 'category':
-        //         return this.setState({
-        //             categoryId: e.target.value,
-        //         })
-        //     case 'title':
-
-        //     case 'price':
-        //         return this.setState({
-        //             price: e.target.value,
-        //         })
-        //     case 'text':
-        //         return this.setState({
-        //             text: e.target.value,
-        //         })
-        //     case 'image':
-        //         return this.setState({
-        //             image: e.target.files[0],
-        //         })
-        //     default:
-        //         break;
-        // }
     }
 
     onHandleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
 
-        const { categoryId, title, price, text, image } = this.state
+        // const { categoryId, title, price, text, image } = this.state
 
         // if (category === '' || title === '' || price === '' || text === '' || image === '') {
         //     return alert('add ')
@@ -119,41 +92,44 @@ class CreateItem extends Component {
 
     render() {
         const { data, categories } = this.props;
-        const { categoryId, title, price, text, image } = this.state
+        const { title, price, text, image } = this.state
 
-        console.log(categories)
         return (
             <form onSubmit={this.onHandleSubmit}>
                 <div className="form-group">
                     <label htmlFor="exampleFormControlSelect1" name='available'>available</label>
-                    <select className="form-control form-control" id="exampleFormControlSelect1" name='available'
+                    <select className="form-control form-control" id="exampleFormControlSelect3" name='available'
                         onChange={this.onHandleChnage} value={this.state.available}>
                         <option>true</option>
                         <option>false</option>
                     </select>
                 </div>
                 <div className="form-group">
+                    <label htmlFor="exampleFormControlSelect1" name='available'>Slide Item</label>
+                    <select className="form-control form-control" id="exampleFormControlSelect4" name='slideItem'
+                        onChange={this.onHandleChnage} value={this.state.slideItem}>
+                        <option>false</option>
+                        <option>true</option>
+                    </select>
+                </div>
+                <div className="form-group">
                     <label htmlFor="exampleFormControlSelect1" name='category'>category</label>
-                    <select className="form-control form-control" id="exampleFormControlSelect1" name='category'
-                        onChange={this.onHandleChnage}>
+                    <select className="form-control form-control" id="exampleFormControlSelect5" name='categoryId'
+                        onChange={this.onHandleChnage} value={this.state.categoryId}>
                         {
                             categories.data.map(item => (
-                                <option key={item.id} value={item.id}>
-                                    {
-                                        item.title
-                                    }
-                                </option>
+                                item.categoryMother !== "" ? <option key={item.id} value={item.id}> {item.title} </option> : null
                             ))
                         }
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Title</label>
+                    <label htmlFor="exampleInputPassword3">Title</label>
                     <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Title" name='title' onChange={this.onHandleChnage} value={title} />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Price</label>
+                    <label htmlFor="exampleInputPassword4">Price</label>
                     <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Price" name='price' onChange={this.onHandleChnage} value={price} />
                 </div>
                 <div className="form-group">
@@ -173,7 +149,6 @@ class CreateItem extends Component {
 
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         categories: state.category.list,
     };

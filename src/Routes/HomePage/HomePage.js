@@ -3,7 +3,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
-import { Link } from 'react-router-dom';
 import SlickSliderHomePage from '../../Components/SlickSliderHomePage/SlickSliderHomePage';
 import Categories from '../../Components/Categories';
 import './HomePage.scss';
@@ -12,18 +11,27 @@ import AllCards from '../../Components/allCards';
 import ErrorPage from '../errorPage';
 
 class HomePage extends Component {
+
+  state = {
+    limit: 3,
+  }
+
   componentDidMount() {
-    // this.props.getItems()
 
-    this.props.getItems([['available', '==', 'true']]);
+    this.props.getItems([['available', '==', 'true']], this.state.limit);
 
-
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      this.props.getItems([['available', '==', 'true']], this.state.limit);
+    }
   }
 
   render() {
+
     const { items } = this.props;
 
-    if (!items.isLoaded || items.data === null) {
+    if (!items.isLoaded || !items.data) {
       return (
         <Loading />
       )
@@ -48,6 +56,7 @@ class HomePage extends Component {
                 <SlickSliderHomePage />
               </div>
               <AllCards items={items} />
+              <button type="button" className="btn btn-primary" onClick={() => this.setState({ limit: this.state.limit + 3 })}>Primary</button>
             </div>
           </div>
         </div>
@@ -64,7 +73,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getItems: query => dispatch(fetchItems(query)),
+    getItems: (query, limit) => dispatch(fetchItems(query, limit)),
+    getSlideItems: query => dispatch(fetchItems(query)),
   };
 }
 

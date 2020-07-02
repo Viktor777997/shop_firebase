@@ -4,6 +4,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems, deleteItem } from '../../store/actions/item';
+import { fetchCategories } from '../../store/actions/category';
+
 import { Link } from 'react-router-dom';
 import Loading from '../../Components/loading';
 import ErrorPage from '../errorPage';
@@ -13,24 +15,35 @@ class AllItemsPage extends Component {
     state = {
         term: '',
         available: "all",
-        isDidAction: false
+        isDidAction: false,
+        categoryId: "",
     }
 
     componentDidMount() {
         this.loadData()
+        this.props.getCategories([['available', '==', 'true']])
+
     }
 
 
+
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.isDidAction && !prevProps.item.isLoaded && this.props.item.isLoaded) {
-            this.setState({ isDidAction: false });
+        if ((this.state.isDidAction && !prevProps.category.isLoaded) || (this.state.categoryId !== prevState.categoryId)) {
             this.loadData()
+            this.setState({ isDidAction: false });
         }
     }
 
 
 
-    loadData = () => this.props.getItems();
+    loadData = () => {
+        if (this.state.categoryId === '') {
+
+            return this.props.getItems();
+        }
+
+        this.props.getItems([['categoryId', '==', this.state.categoryId]])
+    }
 
     delete = (id) => {
         this.props.deleteItem(id);
@@ -40,8 +53,12 @@ class AllItemsPage extends Component {
     }
 
     serchedItems = () => {
-        console.log('ascsc')
         // this.props.getItems([['title', '>=', 'u']]);
+    }
+    onCategoryChange = (e) => {
+        const categoryId = e.target.value;
+        this.setState(state => ({ ...state, categoryId }));
+
     }
 
     onAvailableChange = (e) => {
@@ -58,9 +75,9 @@ class AllItemsPage extends Component {
     }
 
     render() {
-        const { items } = this.props
-        console.log(items)
-        if (!items.isLoaded || items.data === null) {
+        const { items, categories } = this.props
+
+        if (!items.isLoaded || !items.data || !categories.isLoaded || !categories.data) {
             return (
                 <Loading />
 
@@ -95,26 +112,40 @@ class AllItemsPage extends Component {
                                 </div>
                             </th>
                             <th scope="col">
-                                <select className="form-control form-control" id="exampleFormControlSelect1"
+                                <select className="form-control form-control" id="exampleFormControlSelect8"
                                     onChange={this.onAvailableChange} value={this.state.available}>
                                     <option value="all">All</option>
                                     <option value="true">true</option>
                                     <option value="false">false</option>
                                 </select>
                             </th>
-                            <th scope="col">Category</th>
+                            <th scope="col">
+                                <select className="form-control form-control" id="exampleFormControlSelect7"
+                                    onChange={this.onCategoryChange} value={this.state.categoryId}>
+                                    <option value="">All</option>
+                                    {
+                                        this.state.categoryId !== "" ? <option value={this.state.categoryId}>Showed</option> : null
+                                    }
+                                    {
+                                        categories.data.map(item => (
+                                            item.categoryMother === '' ? null : <option key={item.id} value={item.id}>{item.title}</option>
+                                        ))
+                                    }
+                                </select>
+                            </th>
+                            <th scope="col">Slide item</th>
                             <th scope="col">Price</th>
                             <th scope="col">Change</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-
                             items.data.map(item => (
                                 <tr key={item.id}>
                                     <td>{item.title}</td>
                                     <td>{item.available === 'true' ? 'yes' : 'no'}  </td>
-                                    <td>{item.categoryId}</td>
+                                    <td>{item.id}</td>
+                                    <td>{item.slideItem === 'true' ? 'yes' : 'no'}</td>
                                     <td>{`${item.price} rub`}</td>
                                     <td>
                                         <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Delete</button>
@@ -122,13 +153,10 @@ class AllItemsPage extends Component {
                                         <Link to={`/card/${item.id}`} className="mr-2">Show</Link>
                                     </td>
                                 </tr>
-
                             ))
-
                         }
                     </tbody>
                 </table>
-
             </div>
         );
     }
@@ -136,10 +164,9 @@ class AllItemsPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         items: state.item.list,
-        item: state.item.current,
+        categories: state.category.list,
     };
 }
 
@@ -147,6 +174,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getItems: query => dispatch(fetchItems(query)),
         deleteItem: query => dispatch(deleteItem(query)),
+        getCategories: query => dispatch(fetchCategories(query)),
+
     };
 }
 
