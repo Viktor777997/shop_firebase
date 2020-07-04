@@ -1,11 +1,14 @@
 import React from 'react';
-import { Spinner } from 'reactstrap';
 import './loading.scss'
 
-const Loading = (props) => {
+const Loading = () => {
     return (
         <div className="loading">
-            <Spinner type="grow" color="secondary" />
+            <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
+            </div>
         </div>
     );
 }

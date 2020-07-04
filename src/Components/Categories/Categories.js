@@ -19,6 +19,7 @@ class Categories extends Component {
         $('.firstLine').toggleClass('firstLineX');
         $('.secondLine').toggleClass('secondLineX');
         $('.thirdLine').toggleClass('thirdLineX');
+
       });
       $('.categories_li').hover(
         function () {

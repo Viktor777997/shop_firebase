@@ -11,9 +11,11 @@ const ErrorPage = () => {
                     <div></div>
                     <div></div>
                 </div>
-                <h1>oops!</h1>
-                <h2>Error 404 : Page Not Found</h2>
-                <a href="/">go home</a>
+                <h1>Упс!</h1>
+                <h2>
+                    Что-то пошло не так!
+                </h2>
+                <a href="/">Домой</a>
 
             </div>
         </div>

@@ -7,24 +7,20 @@ const AdminPage = () => {
         <div className='conainer'>
             <div className='d-block text-center'>
                 <div className=' mb-3'>
-                    <Link to='/admin/login' className="btn btn-dark col-3">Log in</Link>
+                    <Link to='/admin/login' className="btn btn-dark col-3">Войти</Link>
                 </div>
                 <div className=' mb-3'>
-                    <Link to='/admin/itemCreate' className="btn btn-dark col-3">Create Item</Link>
+                    <Link to='/admin/itemCreate' className="btn btn-dark col-3">Создать товары</Link>
                 </div>
                 <div className=' mb-3'>
-                    <Link to='/admin/allItems' className="btn btn-dark col-3">All Items</Link>
+                    <Link to='/admin/allItems' className="btn btn-dark col-3">Все товары</Link>
                 </div>
                 <div className=' mb-3'>
-                    <Link to='/admin/categoriesCreate' className="btn btn-dark col-3">Create Categories</Link>
+                    <Link to='/admin/categoriesCreate' className="btn btn-dark col-3">Создать категорию</Link>
                 </div>
                 <div className=' mb-3'>
-                    <Link to='/admin/allCategories' className="btn btn-dark col-3">All Categories </Link>
+                    <Link to='/admin/allCategories' className="btn btn-dark col-3">Все категории</Link>
                 </div>
-                {/* <Link to=''></Link>
-                <Link to=''></Link>
-                <Link to=''></Link>
-                <Link to=''></Link> */}
             </div>
         </div>
     );

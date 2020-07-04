@@ -20,8 +20,8 @@ class SlickSliderHomePage extends Component {
         const { items } = this.props;
         const settings = {
             infinite: true,
-            // autoplay: true,
-            autoplaySpeed: 2000,
+            autoplay: true,
+            autoplaySpeed: 1500,
             slidesToShow: 3,
             dots: true,
             slidesToScroll: 1,
@@ -65,6 +65,9 @@ class SlickSliderHomePage extends Component {
             return <div>
                 <ErrorPage />
             </div>
+        }
+        if (items.data.length < 4) {
+            return null
         }
         return (
             <div>

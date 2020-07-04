@@ -8,8 +8,8 @@ const ContactPage = () => {
         <div className='contact-page'>
             <div className='contact-title-div'>
                 <div>
-                    <h1>Contact US</h1>
-                    <h3><a href='tel:+1-303-499-7111'>+1 (303) 499-7111</a></h3>
+                    <h1>Свяжитесь с нами</h1>
+                    <h3><a href='tel:+7 (903) 406-17-58'>+7 (903) 406-17-58</a></h3>
                 </div>
             </div>
             <div className='container'>

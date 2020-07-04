@@ -12,7 +12,6 @@ class ItemInfoPage extends Component {
 
 
     componentDidMount() {
-
         this.props.getItem(this.props.match.params.id);
     }
     render() {
@@ -24,25 +23,30 @@ class ItemInfoPage extends Component {
             )
         }
 
-        if (item.error) {
+        if (item.error || !item.data.title) {
             return <div>
                 <ErrorPage />
             </div>
         }
 
         return (
-            <div className="container">
+            <div className="card-info container">
                 <div className="">
-                    <h1>{item.data.title}</h1>
+                    <h1 className="card-title col">{item.data.title}</h1>
                 </div>
-                <div className="item-gen-div row">
-                    <div className="item-info col-6">
-                        <img alt="img" src={item.data.image}></img>
-                        <p>{item.data.text}</p>
+                <div className="item-gen-div row col">
+                    <div className="item-info pb-10">
+                        <div>
+                            <img alt="img" src={item.data.image}></img>
+                        </div>
+                        <span className='card-info-text'>{item.data.text}</span>
                     </div>
-                    <div className="item-right-div col">
+                    <div className="item-right-div">
                         <BuyItem />
-                        <h2>{item.data.price}$</h2>
+                        <div className='card-prices d-block'>
+                            <h4>{`Цена: ${item.data.bigPrice} ₽`}</h4>
+                            <h4>{`Оптовая цена:  ${item.data.smallPrice} ₽`}</h4>
+                        </div>
                     </div>
                 </div>
             </div>

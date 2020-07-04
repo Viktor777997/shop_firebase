@@ -28,7 +28,7 @@ class AllItemsPage extends Component {
 
 
     componentDidUpdate(prevProps, prevState) {
-        if ((this.state.isDidAction && !prevProps.category.isLoaded) || (this.state.categoryId !== prevState.categoryId)) {
+        if ((this.state.isDidAction && !prevProps.item.isLoaded && this.props.item.isLoaded) || (this.state.categoryId !== prevState.categoryId)) {
             this.loadData()
             this.setState({ isDidAction: false });
         }
@@ -38,11 +38,10 @@ class AllItemsPage extends Component {
 
     loadData = () => {
         if (this.state.categoryId === '') {
-
             return this.props.getItems();
         }
 
-        this.props.getItems([['categoryId', '==', this.state.categoryId]])
+        this.props.getItems([['available', '==', 'true'], ['categoryId', '==', this.state.categoryId]])
     }
 
     delete = (id) => {
@@ -52,9 +51,7 @@ class AllItemsPage extends Component {
         });
     }
 
-    serchedItems = () => {
-        // this.props.getItems([['title', '>=', 'u']]);
-    }
+
     onCategoryChange = (e) => {
         const categoryId = e.target.value;
         this.setState(state => ({ ...state, categoryId }));
@@ -75,8 +72,7 @@ class AllItemsPage extends Component {
     }
 
     render() {
-        const { items, categories } = this.props
-
+        const { items, categories } = this.props;
         if (!items.isLoaded || !items.data || !categories.isLoaded || !categories.data) {
             return (
                 <Loading />
@@ -99,9 +95,8 @@ class AllItemsPage extends Component {
                                     <input
                                         className="form-control mr-sm-2 search-input col"
                                         type="search"
-                                        placeholder="Name"
+                                        placeholder="Имя"
                                         aria-label="Search"
-                                    // onChange={this.onHandleChnage}
                                     ></input>
                                     <button className="btn my-2 my-sm-0 search-btn" type="button" >
                                         <svg className="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -114,17 +109,17 @@ class AllItemsPage extends Component {
                             <th scope="col">
                                 <select className="form-control form-control" id="exampleFormControlSelect8"
                                     onChange={this.onAvailableChange} value={this.state.available}>
-                                    <option value="all">All</option>
-                                    <option value="true">true</option>
-                                    <option value="false">false</option>
+                                    <option value="all">Все</option>
+                                    <option value="true">Да</option>
+                                    <option value="false">Нет</option>
                                 </select>
                             </th>
                             <th scope="col">
                                 <select className="form-control form-control" id="exampleFormControlSelect7"
                                     onChange={this.onCategoryChange} value={this.state.categoryId}>
-                                    <option value="">All</option>
+                                    <option value="">Все</option>
                                     {
-                                        this.state.categoryId !== "" ? <option value={this.state.categoryId}>Showed</option> : null
+                                        this.state.categoryId !== "" ? <option value={this.state.categoryId}>Выбрано</option> : null
                                     }
                                     {
                                         categories.data.map(item => (
@@ -133,9 +128,10 @@ class AllItemsPage extends Component {
                                     }
                                 </select>
                             </th>
-                            <th scope="col">Slide item</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Change</th>
+                            <th scope="col">Карточка слайда</th>
+                            <th scope="col">Цена 1</th>
+                            <th scope="col">Цена 2</th>
+                            <th scope="col">Редактировать</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,14 +139,15 @@ class AllItemsPage extends Component {
                             items.data.map(item => (
                                 <tr key={item.id}>
                                     <td>{item.title}</td>
-                                    <td>{item.available === 'true' ? 'yes' : 'no'}  </td>
+                                    <td>{item.available === 'true' ? 'Да' : 'Нет'}  </td>
                                     <td>{item.id}</td>
-                                    <td>{item.slideItem === 'true' ? 'yes' : 'no'}</td>
-                                    <td>{`${item.price} rub`}</td>
+                                    <td>{item.slideItem === 'true' ? 'Да' : 'Нет'}</td>
+                                    <td>{`${item.smallPrice} ₽`}</td>
+                                    <td>{`${item.bigPrice} ₽`}</td>
                                     <td>
-                                        <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Delete</button>
-                                        <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Edit</Link>
-                                        <Link to={`/card/${item.id}`} className="mr-2">Show</Link>
+                                        <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Удалить</button>
+                                        <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Изменить</Link>
+                                        <Link to={`/card/${item.id}`} className="mr-2">Показать</Link>
                                     </td>
                                 </tr>
                             ))
@@ -165,6 +162,7 @@ class AllItemsPage extends Component {
 
 function mapStateToProps(state) {
     return {
+        item: state.item.current,
         items: state.item.list,
         categories: state.category.list,
     };

@@ -12,6 +12,7 @@ import './index.scss'
 
 const store = createStore();
 
+
 const render = () => {
   ReactDOM.render(
     <AppContainer>

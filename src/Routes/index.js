@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Provider as ReduxProvider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import { Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { RouteWithMainLayout } from '../Layout';
 
 import HomePage from './HomePage';
@@ -16,7 +15,7 @@ import AllCategoriesPage from './allCategoriesPage';
 import ItemInfoPage from './itemInfoPage';
 import AdminPage from './adminPage';
 import AllItemsPage from './allItemsPage';
-import categoryEditPage from './categoryEditPage/categoryEditPage';
+import CategoryEditPage from './categoryEditPage';
 import CtdSerchedItems from './ctdSerchedItems';
 import ErrorPage from './errorPage';
 
@@ -24,7 +23,7 @@ import ErrorPage from './errorPage';
 const App = (props) => {
   return (
     <ReduxProvider store={props.store}>
-      <ConnectedRouter history={props.history}>
+      <Router history={props.history}>
         <Switch>
           <RouteWithMainLayout path="/" component={HomePage} exact />
           <RouteWithMainLayout path="/home" component={HomePage} exact />
@@ -37,12 +36,12 @@ const App = (props) => {
           <RouteWithMainLayout path="/admin/allItems" component={AllItemsPage} exact />
           <RouteWithMainLayout path="/admin/itemCreate" component={ItemCreatePage} exact />
           <RouteWithMainLayout path="/admin/itemEdit/:id" component={ItemEditPage} exact />
-          <RouteWithMainLayout path="/admin/categoryEdit/:id" component={categoryEditPage} exact />
+          <RouteWithMainLayout path="/admin/categoryEdit/:id" component={CategoryEditPage} exact />
           <RouteWithMainLayout path="/admin/categoriesCreate" component={CategoriesCreatePage} exact />
           <RouteWithMainLayout path="/admin/allcategories" component={AllCategoriesPage} exact />
           <RouteWithMainLayout component={ErrorPage} />
         </Switch>
-      </ConnectedRouter>
+      </Router>
     </ReduxProvider>
   );
 };

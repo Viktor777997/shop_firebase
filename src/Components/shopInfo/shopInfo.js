@@ -6,9 +6,9 @@ import './shopinfo.scss'
 
 const ShopInfo = () => {
     const callInfo = {
-        shopAdress: '98 West 21th Street, Suite 721',
-        shopEmail: 'vaxo@gmail.com',
-        shopPhone: '+1-303-499-7111',
+        shopAdress: 'г. Ростов-на-Дону, ТК «Атлант»  Ряд 4 Павильон 15 Ряд 25 Павильон 104',
+        shopEmail: ' tem-vachagan@yandex.ru',
+        shopPhone: '+7 (903) 406-17-58',
     }
     return (
         <div className='shopInfo'>
@@ -18,7 +18,7 @@ const ShopInfo = () => {
                         <svg className="bi bi-geo-alt" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         </svg>
-                        <span>Address:</span><Link to='/contact'>{callInfo.shopAdress}</Link>
+                        <span>Адресс:</span><Link to='/contact'>{callInfo.shopAdress}</Link>
                     </div>
                 </li>
                 <li className="nav-item active">
@@ -27,8 +27,7 @@ const ShopInfo = () => {
                             <path fillRule="evenodd" d="M11 1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z" />
                             <path fillRule="evenodd" d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                         </svg>
-
-                        <span>Phone:</span><a href={`tel:${callInfo.shopPhone}`}>{callInfo.shopPhone}</a>
+                        <span>Телефон:</span><a href={`tel:${callInfo.shopPhone}`}>{callInfo.shopPhone}</a>
                     </div>
                 </li>
                 <li className="nav-item active">

@@ -11,13 +11,26 @@ import ErrorPage from '../errorPage';
 
 class CtdSerchedItems extends Component {
 
-    componentDidMount() {
-        const id = this.props.match.params.id;
-        this.props.getCategory(id)
-        this.props.getItems([['available', '==', 'true'], ['categoryId', '==', id]]);
-
+    state = {
+        id: this.props.match.params.id,
     }
 
+    componentDidMount() {
+        const { id } = this.state;
+        this.props.getCategory(id);
+        this.loadData();
+    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     this.setState({ id: this.props.match.params.id })
+
+    //     if (prevState.id !== this.state.id) {
+    //         // window.location.reload(false)
+    //     }
+    // }
+    loadData = () => {
+        this.props.getItems([['available', '==', 'true'], ['categoryId', '==', this.state.id]]);
+
+    }
     render() {
         const { items, category } = this.props;
 
@@ -36,15 +49,14 @@ class CtdSerchedItems extends Component {
 
             <div className="App">
                 <div className="gen_div container">
-                    <h1 >Title</h1>
-
+                    <h2>Меню</h2>
                     <div className="general-div ">
                         <Categories />
 
                         <div className="slide-and-random-cards">
                             <div>
                                 {/* <div className='d-flex justify-content-end font-weight-light pr-3'></div> */}
-                                <p className="text-right font-weight-lighter pr-3">{category.data.title}</p>
+                                <h3 className="text-right pr-3">{category.data.title}</h3>
                                 <AllCards items={items} />
                             </div>
                         </div>
@@ -59,6 +71,7 @@ function mapStateToProps(state) {
     return {
         category: state.category.current,
         items: state.item.list,
+        item: state.item.current,
     };
 }
 

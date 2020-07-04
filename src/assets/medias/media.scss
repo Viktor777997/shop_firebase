@@ -23,7 +23,7 @@
         max-width: 100%;
         padding: 0;
 
-        h1 {
+        h2 {
             display: none;
         }
     }
@@ -90,6 +90,26 @@
         left: 8px;
     }
 
+    .card-info {
+        .item-gen-div {
+            .item-info {
+                max-width: 100%;
+
+                img {
+                    width: 100%;
+                    min-height: 40vh;
+                }
+            }
+
+            .item-right-div {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row;
+            }
+        }
+    }
+
     .slick-next {
         right: 8px;
     }
@@ -136,6 +156,10 @@
         top: 88px;
     }
 
+    .menu-btn-clicked .categories {
+        width: 50vw;
+    }
+
     .footer {
         padding-top: 20px;
 
@@ -147,6 +171,12 @@
 
     .category-open-btn {
         top: 76px;
+    }
+
+    .card-info {
+        .card-title {
+            font-size: 2rem;
+        }
     }
 }
 
@@ -161,6 +191,22 @@
     .slick-prev {
         // display: none !important;
         width: 35px;
+    }
+
+    .card-info {
+        .card-prices {
+            h4 {
+                font-size: 1rem;
+            }
+        }
+
+        .card-info-text {
+            font-size: 13px;
+        }
+    }
+
+    .card {
+        max-width: 300px;
     }
 
     .form-inline {
@@ -184,15 +230,25 @@
     .card-body {
         padding: 1rem;
     }
+
+    .card-info {
+        .item-gen-div {
+            flex-direction: column;
+
+            .item-info {
+                max-width: 100%;
+            }
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+        }
+    }
 }
 
 @media only screen and (max-width: 380px) {
     .navbar-brand {
         margin-right: 0;
-    }
-
-    .card {
-        max-width: 300px;
     }
 
     .footer {

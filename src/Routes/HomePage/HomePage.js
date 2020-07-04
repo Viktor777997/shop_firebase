@@ -46,7 +46,7 @@ class HomePage extends Component {
     return (
       <div className="App">
         <div className="gen_div container">
-          <h1>Title</h1>
+          <h2>Меню</h2>
 
           <div className="general-div">
             <Categories />
@@ -56,7 +56,7 @@ class HomePage extends Component {
                 <SlickSliderHomePage />
               </div>
               <AllCards items={items} />
-              <button type="button" className="btn btn-primary" onClick={() => this.setState({ limit: this.state.limit + 3 })}>Primary</button>
+              {/* <button type="button" className="btn btn-primary" onClick={() => this.setState({ limit: this.state.limit + 3 })}>Primary</button> */}
             </div>
           </div>
         </div>

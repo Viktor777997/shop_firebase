@@ -28,17 +28,18 @@ class CreateCategory extends Component {
         })
     }
     onSubmit = (e) => {
+        e.preventDefault();
+        if (this.state.title === '') {
+            return alert('Есть пустые строки')
+        }
         if (this.props.data) {
             this.props.edit(this.props.id, this.state)
-            alert('category edited')
+            return alert('Категория изменена')
+        }
 
-        }
-        else {
-            this.props.createCategory(this.state)
-            alert('category created')
-            // setTimeout(() => window.location.reload(), 1)
-        }
-        e.preventDefault();
+        this.props.createCategory(this.state)
+        alert('Категория создана')
+        return setTimeout(() => { window.location.reload(false) }, 2000)
     }
 
     render() {
@@ -48,19 +49,19 @@ class CreateCategory extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1" name='available'>available</label>
+                    <label htmlFor="exampleFormControlSelect1" name='available'>Активный</label>
                     <select className="form-control form-control" id="exampleFormControlSelect1" name='available'
                         onChange={this.onChange} value={this.state.available}>
-                        <option>true</option>
-                        <option>false</option>
+                        <option value="true">Да</option>
+                        <option value='false'>Нет</option>
                     </select>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1" name='available'>category mother</label>
+                    <label htmlFor="exampleFormControlSelect1" name='category'>Категория</label>
                     <select className="form-control form-control" id="exampleFormControlSelect2" name='categoryMother'
                         onChange={this.onChange} value={this.state.categoryMother}>
-                        <option value="">Create as category</option>
+                        <option value="">По умолчанию</option>
                         {
                             categories.map(item => (
                                 <option key={item.id} value={item.id} >{item.title}</option>
@@ -70,12 +71,12 @@ class CreateCategory extends Component {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">New Category</label>
-                    <input type="text" className="form-control" id="exampleInputPassword2" placeholder="Category Name" name='title'
+                    <label htmlFor="exampleInputPassword1">Новая категория</label>
+                    <input type="text" className="form-control" id="exampleInputPassword2" placeholder="Название категории" name='title'
                         onChange={this.onChange} value={this.state.title} />
                 </div>
 
-                <button type="submit" className="btn btn-dark">{data ? "Edit Category" : 'Create Category'}</button>
+                <button type="submit" className="btn btn-dark">{data ? "Изменить категорию" : 'Создать категорию'}</button>
             </form>
         );
     }

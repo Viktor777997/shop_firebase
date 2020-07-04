@@ -24,7 +24,7 @@ class OpenCategory extends Component {
     componentDidMount() {
 
         const Api = new ApiService(getFirestore(), getFirebase());
-        Api.getCategories([["categoryMother", "==", this.props.motherId]])
+        Api.getCategories([["categoryMother", "==", this.props.motherId], ['available', '==', 'true']])
             .then(payload => {
                 this.setState(state => ({
                     ...state,
@@ -53,9 +53,8 @@ class OpenCategory extends Component {
                     {
                         categories.data.map(item => (
                             <li key={item.id}>
-                                <Link to={`/ctd/${item.id}`}>{item.title}</Link>
+                                <Link to={`/ctd/${item.id}`} className='categories_a'>{item.title}</Link>
                             </li>
-
                         ))
                     }
 
