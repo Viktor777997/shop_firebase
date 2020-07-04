@@ -5,10 +5,10 @@ import './buyItem.scss'
 
 const BuyItem = (props) => {
   const {
-    buttonLabel = 'Calling',
+    buttonLabel = 'Связаться',
     className
   } = props;
- 
+
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -16,16 +16,16 @@ const BuyItem = (props) => {
   const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={toggle}>&times;</button>;
   return (
     <div>
-      <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
+      <Button color="success" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className} external={externalCloseBtn}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>Контакты</ModalHeader>
         <ModalBody>
-          <b>Look at the top right of the page/viewport!</b><br />
+          <b>Для осуществления заказа - свяжитесь с нами любым удобным для Вас способом!</b><br />
           <ShopInfo />
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+          {/* <Button color="primary" onClick={toggle}>Do Something</Button>{' '} */}
+          <Button color="danger" onClick={toggle}>Отмена</Button>
         </ModalFooter>
       </Modal>
     </div>

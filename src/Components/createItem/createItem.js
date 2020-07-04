@@ -12,13 +12,14 @@ class CreateItem extends Component {
     constructor(props) {
         super(props)
         if (this.props.data) {
-            const { available, categoryId, title, price, text, slideItem } = this.props.data
+            const { available, categoryId, title, bigPrice, smallPrice, text, slideItem } = this.props.data
             this.state = {
                 available,
                 categoryId,
                 title,
                 slideItem,
-                price,
+                bigPrice,
+                smallPrice,
                 text,
                 image: '',
             }
@@ -29,7 +30,8 @@ class CreateItem extends Component {
                 slideItem: 'false',
                 categoryId: '',
                 title: '',
-                price: '',
+                bigPrice: '',
+                smallPrice: '',
                 text: '',
                 image: '',
             }
@@ -73,49 +75,52 @@ class CreateItem extends Component {
     onHandleSubmit = (e) => {
         e.preventDefault();
 
-        // const { categoryId, title, price, text, image } = this.state
+        const { categoryId, title, bigPrice, smallPrice, text, image } = this.state
 
-        // if (category === '' || title === '' || price === '' || text === '' || image === '') {
-        //     return alert('add ')
-        // }
+
         if (this.props.data) {
+            if (categoryId === '' || title === '' || bigPrice === '' || smallPrice === '' || text === '') {
+                return alert('Есть пустые строки')
+            }
             this.props.edit(this.props.id, this.state)
+            return alert('Карточка редактирована')
+        }
+        if (categoryId === '' || title === '' || bigPrice === '' || smallPrice === '' || text === '' || image === '') {
+            return alert('Есть пустые строки')
+        }
+        this.props.create(this.state)
+        return alert('Карточка создана')
 
-            alert('item edited')
-        }
-        else {
-            this.props.create(this.state)
-            alert('item created')
-        }
 
     }
 
     render() {
         const { data, categories } = this.props;
-        const { title, price, text, image } = this.state
+        const { title, bigPrice, smallPrice, text, image } = this.state
 
         return (
             <form onSubmit={this.onHandleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1" name='available'>available</label>
+                    <label htmlFor="exampleFormControlSelect1" name='available'>Активный</label>
                     <select className="form-control form-control" id="exampleFormControlSelect3" name='available'
                         onChange={this.onHandleChnage} value={this.state.available}>
-                        <option>true</option>
-                        <option>false</option>
+                        <option value="true">Да</option>
+                        <option value='false'>Нет</option>
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1" name='available'>Slide Item</label>
+                    <label htmlFor="exampleFormControlSelect1" name='SlideItem'>Карточка слайда</label>
                     <select className="form-control form-control" id="exampleFormControlSelect4" name='slideItem'
                         onChange={this.onHandleChnage} value={this.state.slideItem}>
-                        <option>false</option>
-                        <option>true</option>
+                        <option value='false'>Нет</option>
+                        <option value="true">Да</option>
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1" name='category'>category</label>
+                    <label htmlFor="exampleFormControlSelect1" name='category'>Категория</label>
                     <select className="form-control form-control" id="exampleFormControlSelect5" name='categoryId'
                         onChange={this.onHandleChnage} value={this.state.categoryId}>
+                        <option value=''>Выберите категорию</option>
                         {
                             categories.data.map(item => (
                                 item.categoryMother !== "" ? <option key={item.id} value={item.id}> {item.title} </option> : null
@@ -124,24 +129,28 @@ class CreateItem extends Component {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword3">Title</label>
-                    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Title" name='title' onChange={this.onHandleChnage} value={title} />
+                    <label htmlFor="exampleInputPassword3">Название</label>
+                    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Название" name='title' onChange={this.onHandleChnage} value={title} />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword4">Price</label>
-                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Price" name='price' onChange={this.onHandleChnage} value={price} />
+                    <label htmlFor="exampleInputPassword4">Оптовая цена</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Оптовая цена" name='bigPrice' onChange={this.onHandleChnage} value={bigPrice} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlTextarea1">About item</label>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name='text' onChange={this.onHandleChnage} value={text} />
+                    <label htmlFor="exampleInputPassword121"> Цена</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена" name='smallPrice' onChange={this.onHandleChnage} value={smallPrice} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleFormControlFile1">item fhoto</label>
-                    <img height='100px' width='100px' className="choosedPhoto mb-3 ml-3" alt='img' src={data ? data.image : null} value={image} />
+                    <label htmlFor="exampleFormControlTextarea15">О товаре</label>
+                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name='text' placeholder='О товаре' onChange={this.onHandleChnage} value={text} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="exampleFormControlFile1">Фото товара</label>
+                    <img height='100px' width='100px' className="choosedPhoto mb-3 ml-3" alt='Фото' src={data ? data.image : null} value={image} />
                     <input type="file" className="form-control-file imgInput" id="exampleFormControlFile1" name='image' onChange={this.onHandleChnage} />
                 </div>
-                <button type="submit" className="btn btn-dark col-2">{data ? "Edit Item" : 'Create Item'}</button>
+                <button type="submit" className="btn btn-dark col-2">{data ? "Редактировать карточку" : 'Создать карточку'}</button>
             </form>
         );
     }

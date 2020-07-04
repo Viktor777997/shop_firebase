@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="gen_footer">
-                <h1>Navbar</h1>
+                <h1>Хозтовары</h1>
 
                 <ShopInfo />
             </div>

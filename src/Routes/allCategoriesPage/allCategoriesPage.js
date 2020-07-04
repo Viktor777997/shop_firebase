@@ -35,7 +35,7 @@ class AllCategoriesPage extends Component {
         if (this.state.category === 'all') {
             return this.props.getCategories()
         }
-        return this.props.getCategories([['categoryMother', '==', `${this.state.category}`]])
+        return this.props.getCategories([['available', '==', 'true'], ['categoryMother', '==', `${this.state.category}`]])
     }
     delete = (id) => {
         this.props.deleteCategory(id);
@@ -45,9 +45,7 @@ class AllCategoriesPage extends Component {
         });
     }
 
-    serchedItems = () => {
-        this.loadData()
-    }
+
 
     onAvailableChange = (e) => {
         const available = e.target.value;
@@ -94,11 +92,10 @@ class AllCategoriesPage extends Component {
                                     <input
                                         className="form-control mr-sm-2 search-input col"
                                         type="search"
-                                        placeholder="Name"
+                                        placeholder="Имя"
                                         aria-label="Search"
-                                    // onChange={this.onHandleChnage}
                                     ></input>
-                                    <button className="btn my-2 my-sm-0 search-btn" type="button" onClick={this.serchedItems}>
+                                    <button className="btn my-2 my-sm-0 search-btn" type="button" >
                                         <svg className="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
                                             <path fillRule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
@@ -109,17 +106,17 @@ class AllCategoriesPage extends Component {
                             <th scope="col">
                                 <select className="form-control form-control" id="exampleFormControlSelect6"
                                     onChange={this.onAvailableChange} value={this.state.available}>
-                                    <option value="all">All</option>
-                                    <option value="true">true</option>
-                                    <option value="false">false</option>
+                                    <option value="all">Все</option>
+                                    <option value="true">Да</option>
+                                    <option value="false">Нет</option>
                                 </select>
                             </th>
                             <th scope="col">
                                 <select className="form-control form-control" id="exampleFormControlSelect7"
                                     onChange={this.onCategoryChange} value={this.state.category}>
-                                    <option value="all">All</option>
+                                    <option value="all">Все</option>
                                     {
-                                        this.state.category !== "all" ? <option value={this.state.category}>Showed sub categories</option> : null
+                                        this.state.category !== "all" ? <option value={this.state.category}>Показать подкатегорию</option> : null
                                     }
                                     {
                                         categories.data.map(item => (
@@ -129,7 +126,7 @@ class AllCategoriesPage extends Component {
 
                                 </select>
                             </th>
-                            <th scope="col">Change</th>
+                            <th scope="col">Редактировать</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,11 +134,11 @@ class AllCategoriesPage extends Component {
                             categories.data.map((item) => (
                                 <tr key={item.id}>
                                     <td>{item.title}</td>
-                                    <td>{item.available === 'true' ? 'yes' : 'no'}  </td>
-                                    <td>{item.categoryMother === '' ? 'it is mother category' : null}</td>
+                                    <td>{item.available === 'true' ? 'Да' : 'Нет'}  </td>
+                                    <td>{item.categoryMother === '' ? 'Основная категория' : null}</td>
                                     <td>
-                                        <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Delete</button>
-                                        <Link to={`/admin/categoryEdit/${item.id}`} className="mr-2">Edit</Link>
+                                        <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Удалить</button>
+                                        <Link to={`/admin/categoryEdit/${item.id}`} className="mr-2">Изменить</Link>
                                         {/* <Link to={`/card/${item.id}`} className="mr-2">Show</Link> */}
                                     </td>
                                 </tr>

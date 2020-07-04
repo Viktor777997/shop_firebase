@@ -9,9 +9,9 @@ class ApiService {
 
   // items
   getItems = async (query = [], limit = 10000) => {
-    let resp = this._firestore.collection('items').orderBy('createDate', 'desc');
+    let resp = this._firestore.collection('items').orderBy('createDate', 'desc')
     query.forEach(value => {
-      resp = resp.where(...value).limit(limit);
+      resp = resp.where(...value)
     });
 
     resp = await resp.get();
@@ -28,7 +28,7 @@ class ApiService {
     return { id, ...resp.data() };
   };
 
-  createItem = async ({ title, text, categoryId, price, available, slideItem, image } = {}) => {
+  createItem = async ({ title, text, categoryId, bigPrice, smallPrice, available, slideItem, image } = {}) => {
 
     const fileName = `${makeId(10)}.${getExtension(image.name)}`;
 
@@ -46,7 +46,8 @@ class ApiService {
       thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
       title,
       text,
-      price,
+      bigPrice,
+      smallPrice,
       slideItem,
       available,
       categoryId,
@@ -55,12 +56,13 @@ class ApiService {
     return resp;
   };
 
-  updateItem = async (id = null, { title, text, price, available, slideItem, categoryId, image }) => {
+  updateItem = async (id = null, { title, text, bigPrice, smallPrice, available, slideItem, categoryId, image }) => {
     const doc = await this._firestore.collection('items').doc(id);
     const data = {
       title,
       text,
-      price,
+      bigPrice,
+      smallPrice,
       slideItem,
       available,
       categoryId
