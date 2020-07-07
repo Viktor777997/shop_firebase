@@ -129,8 +129,8 @@ class AllItemsPage extends Component {
                                 </select>
                             </th>
                             <th scope="col">Карточка слайда</th>
-                            <th scope="col">Цена 1</th>
-                            <th scope="col">Цена 2</th>
+                            <th scope="col">Цена розница</th>
+                            <th scope="col">Цена опт</th>
                             <th scope="col">Редактировать</th>
                         </tr>
                     </thead>
@@ -142,8 +142,8 @@ class AllItemsPage extends Component {
                                     <td>{item.available === 'true' ? 'Да' : 'Нет'}  </td>
                                     <td>{item.id}</td>
                                     <td>{item.slideItem === 'true' ? 'Да' : 'Нет'}</td>
-                                    <td>{`${item.smallPrice} ₽`}</td>
                                     <td>{`${item.bigPrice} ₽`}</td>
+                                    <td>{`${item.smallPrice} ₽`}</td>
                                     <td>
                                         <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Удалить</button>
                                         <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Изменить</Link>
