@@ -44,8 +44,8 @@ class ItemInfoPage extends Component {
                     <div className="item-right-div">
                         <BuyItem />
                         <div className='card-prices d-block'>
-                            <h4>{`Цена: ${item.data.bigPrice} ₽`}</h4>
-                            <h4>{`Оптовая цена:  ${item.data.smallPrice} ₽`}</h4>
+                            <h4>{`Цена розница: ${item.data.bigPrice} ₽`}</h4>
+                            <h4>{`Цена опт:  ${item.data.smallPrice} ₽`}</h4>
                         </div>
                     </div>
                 </div>

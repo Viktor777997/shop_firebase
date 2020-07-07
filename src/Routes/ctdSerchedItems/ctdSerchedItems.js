@@ -16,19 +16,18 @@ class CtdSerchedItems extends Component {
     }
 
     componentDidMount() {
-        const { id } = this.state;
-        this.props.getCategory(id);
         this.loadData();
     }
-    // componentDidUpdate(prevProps, prevState) {
-    //     this.setState({ id: this.props.match.params.id })
+    componentDidUpdate(prevProps, prevState) {
 
-    //     if (prevState.id !== this.state.id) {
-    //         // window.location.reload(false)
-    //     }
-    // }
+        if (prevState.id !== this.props.match.params.id) {
+            this.loadData();
+            this.setState({ id: this.props.match.params.id })
+        }
+    }
     loadData = () => {
         this.props.getItems([['available', '==', 'true'], ['categoryId', '==', this.state.id]]);
+        this.props.getCategory(this.state.id);
 
     }
     render() {

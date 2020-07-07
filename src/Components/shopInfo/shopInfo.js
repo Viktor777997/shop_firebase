@@ -6,7 +6,7 @@ import './shopinfo.scss'
 
 const ShopInfo = () => {
     const callInfo = {
-        shopAdress: 'г. Ростов-на-Дону, ТК «Атлант»  Ряд 4 Павильон 15 Ряд 25 Павильон 104',
+        shopAdress: 'г. Ростов-на-Дону, ТК «Атлант»  Ряд 4 Павильон 15; Ряд 25 Павильон 104',
         shopEmail: ' tem-vachagan@yandex.ru',
         shopPhone: '+7 (903) 406-17-58',
     }

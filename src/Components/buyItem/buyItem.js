@@ -18,7 +18,7 @@ const BuyItem = (props) => {
     <div>
       <Button color="success" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className} external={externalCloseBtn}>
-        <ModalHeader>Контакты</ModalHeader>
+        <ModalHeader>Заказать</ModalHeader>
         <ModalBody>
           <b>Для осуществления заказа - свяжитесь с нами любым удобным для Вас способом!</b><br />
           <ShopInfo />

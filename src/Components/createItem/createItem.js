@@ -134,12 +134,12 @@ class CreateItem extends Component {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword4">Оптовая цена</label>
-                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Оптовая цена" name='bigPrice' onChange={this.onHandleChnage} value={bigPrice} />
+                    <label htmlFor="exampleInputPassword4">Цена розница</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена розница" name='bigPrice' onChange={this.onHandleChnage} value={bigPrice} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword121"> Цена</label>
-                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена" name='smallPrice' onChange={this.onHandleChnage} value={smallPrice} />
+                    <label htmlFor="exampleInputPassword121">Цена опт</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена опт" name='smallPrice' onChange={this.onHandleChnage} value={smallPrice} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleFormControlTextarea15">О товаре</label>
