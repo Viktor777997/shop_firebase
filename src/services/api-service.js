@@ -74,8 +74,11 @@ class ApiService {
         name: fileName,
       });
 
-      data.imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
-      data.thumbUrl = data.imgUrl.replace(fileName, `thumb-400-${fileName}`);
+      const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
+      const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
+
+      data.image = `${getPathFromUrl(imgUrl)}?alt=media`
+      data.thumb = `${getPathFromUrl(thumbUrl)}?alt=media`;
     }
 
 
