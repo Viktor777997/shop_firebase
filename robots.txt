@@ -1,2 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
+https://hoztovary161.ru/
 User-agent: *
+google-site-verification=YLV1zonSJNwQyxy6Y6ePC1WL6kdclQ0GB_R8vFEGlGI
