@@ -1,29 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
+import firebase from '../../config/firebase'
 
-const AdminPage = () => {
-    return (
-        <div className='conainer'>
-            <div className='d-block text-center'>
-                <div className=' mb-3'>
-                    <Link to='/admin/login' className="btn btn-dark col-3">Войти</Link>
-                </div>
-                <div className=' mb-3'>
-                    <Link to='/admin/itemCreate' className="btn btn-dark col-3">Создать товары</Link>
-                </div>
-                <div className=' mb-3'>
-                    <Link to='/admin/allItems' className="btn btn-dark col-3">Все товары</Link>
-                </div>
-                <div className=' mb-3'>
-                    <Link to='/admin/categoriesCreate' className="btn btn-dark col-3">Создать категорию</Link>
-                </div>
-                <div className=' mb-3'>
-                    <Link to='/admin/allCategories' className="btn btn-dark col-3">Все категории</Link>
-                </div>
+import AdminHomePage from '../adminHomePage'
+import LoginPage from '../loginPage'
+import Loading from '../../Components/loading'
+
+class AdminPage extends Component {
+    state = {
+        user: undefined,
+    }
+
+    componentDidMount() {
+        this.authListener();
+    }
+
+    authListener() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ user });
+                localStorage.setItem('user', user.uid);
+            } else {
+                this.setState({ user: null });
+                localStorage.removeItem('user');
+            }
+        });
+    }
+
+    render() {
+        if (this.state.user === undefined) {
+            return <Loading />
+        }
+        return (
+            <div className='conainer'>
+                {this.state.user ? <AdminHomePage /> : <LoginPage />}
             </div>
-        </div>
-    );
+        );
+    }
 }
+
+
 
 export default AdminPage;

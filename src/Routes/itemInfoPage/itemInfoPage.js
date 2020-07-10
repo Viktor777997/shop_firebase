@@ -7,6 +7,7 @@ import './itemInfoPage.scss'
 import BuyItem from '../../Components/buyItem';
 import Loading from '../../Components/loading';
 import ErrorPage from '../errorPage';
+import { Helmet } from 'react-helmet';
 
 class ItemInfoPage extends Component {
 
@@ -31,13 +32,18 @@ class ItemInfoPage extends Component {
 
         return (
             <div className="card-info container">
-                <div className="">
+                <Helmet>
+                    <title>{item.data.title}</title>
+                    <meta name="description" content={item.data.text} />
+                    <meta name='keywords' content={item.data.title} />
+                </Helmet>
+                <div>
                     <h1 className="card-title col">{item.data.title}</h1>
                 </div>
                 <div className="item-gen-div row col">
                     <div className="item-info pb-10">
                         <div>
-                            <img alt="img" src={item.data.image}></img>
+                            <img src={item.data.image} alt={item.data.title} title={item.data.title} />
                         </div>
                         <span className='card-info-text'>{item.data.text}</span>
                     </div>

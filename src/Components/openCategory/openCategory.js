@@ -53,7 +53,7 @@ class OpenCategory extends Component {
                     {
                         categories.data.map(item => (
                             <li key={item.id}>
-                                <Link to={`/ctd/${item.id}`} className='categories_a'>{item.title}</Link>
+                                <Link to={`/ctd/${item.id}`} className='categories_a opened_categories_a'>{item.title}</Link>
                             </li>
                         ))
                     }

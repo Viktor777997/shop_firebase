@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
 import { fetchCategory } from '../../store/actions/category';
+import { Helmet } from "react-helmet";
+
 import Loading from '../../Components/loading';
 import AllCards from '../../Components/allCards';
 import ErrorPage from '../errorPage';
@@ -16,6 +18,7 @@ class CtdSerchedItems extends Component {
     }
 
     componentDidMount() {
+
         this.loadData();
     }
     componentDidUpdate(prevProps, prevState) {
@@ -47,15 +50,21 @@ class CtdSerchedItems extends Component {
         return (
 
             <div className="App">
+                <Helmet>
+                    <title>{category.data.title}</title>
+                    <meta name="description" content={category.data.title} />
+                    <meta name='keywords' content={category.data.title} />
+                </Helmet>
                 <div className="gen_div container">
-                    <h2>Меню</h2>
+                    <div className='title-homePage'>
+                        <h2>Меню</h2>
+                    </div>
                     <div className="general-div ">
                         <Categories />
-
                         <div className="slide-and-random-cards">
                             <div>
                                 {/* <div className='d-flex justify-content-end font-weight-light pr-3'></div> */}
-                                <h3 className="text-right pr-3">{category.data.title}</h3>
+                                <h3 className="text-right pr-3 mb-4">{category.data.title}</h3>
                                 <AllCards items={items} />
                             </div>
                         </div>

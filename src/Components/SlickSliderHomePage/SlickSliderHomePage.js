@@ -77,7 +77,9 @@ class SlickSliderHomePage extends Component {
                             <div className="slide-pages" key={item.id}>
                                 <Link to={`/card/${item.id}`}>
                                     <img src={item.image}
-                                        alt=""></img>
+                                        alt={item.title}
+                                        title={item.title}
+                                    />
                                 </Link>
                             </div>
 
