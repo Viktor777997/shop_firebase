@@ -21,8 +21,6 @@ class CreateCategory extends Component {
     }
 
     onChange = (e) => {
-
-
         return this.setState({
             [e.target.name]: e.target.value,
         })

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Categories.scss'
 import OpenCategory from '../openCategory';
 import $ from 'jquery';
-
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -33,7 +32,7 @@ class Categories extends Component {
     });
     $(document).click(function (e) {
       let target = e.target;
-      if (!$(target).is('.categories') && !$(target).parents().is('.categories')) {
+      if ((!$(target).is('.categories') && !$(target).parents().is('.categories')) || $(target).is('.opened_categories_a')) {
         $('body').removeClass(' hovred');
         $('body').removeClass(' menu-btn-clicked');
         $('.categories_li').removeClass(' li_clicked');

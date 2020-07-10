@@ -29,3 +29,5 @@ export const fetchUser = id => (dispatch, getState, { getFirebase, getFirestore 
       dispatch(createAction(FETCH_USER_FAILURE, ErrorService.parse(payload)));
     });
 };
+
+

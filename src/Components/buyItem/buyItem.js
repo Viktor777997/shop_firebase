@@ -5,7 +5,7 @@ import './buyItem.scss'
 
 const BuyItem = (props) => {
   const {
-    buttonLabel = 'Связаться',
+    buttonLabel = 'Заказать',
     className
   } = props;
 

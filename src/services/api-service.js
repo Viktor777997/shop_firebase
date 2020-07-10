@@ -151,6 +151,7 @@ class ApiService {
 
     return resp;
   };
+
   deleteCategory = async (id = null) => {
     const doc = await this._firestore.collection('categories').doc(id);
 

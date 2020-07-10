@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './PricePage.scss'
+import { Helmet } from "react-helmet";
 
 class PricePage extends Component {
     render() {
@@ -8,6 +9,11 @@ class PricePage extends Component {
         return (
 
             <div className="container" >
+                <Helmet htmlAttributes>
+                    <title>Прайс-лист</title>
+                    <meta name="description" content="Оцинкованные товары, Садовый инветарь, Черенки, Чугунное литье, Мангалы" />
+                    <meta name="keywords" content="Оцинкованные товары, Садовый инветарь, Черенки, Чугунное литье, Мангалы" />
+                </Helmet>
                 <div>
                     <h1 className="prices-title">
                         Прайс-лист

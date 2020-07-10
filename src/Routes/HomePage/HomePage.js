@@ -3,13 +3,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
+import { Helmet } from "react-helmet";
 import SlickSliderHomePage from '../../Components/SlickSliderHomePage/SlickSliderHomePage';
 import Categories from '../../Components/Categories';
 import './HomePage.scss';
 import Loading from '../../Components/loading';
 import AllCards from '../../Components/allCards';
 import ErrorPage from '../errorPage';
-
 class HomePage extends Component {
 
   state = {
@@ -45,9 +45,17 @@ class HomePage extends Component {
     }
     return (
       <div className="App">
+        <Helmet htmlAttributes>
+          <title>Хозяйственные товары в Ростове-на-Дону</title>
+          <meta name="description" content="Хозяйственные товары в Ростове-на-Дону, Меню" />
+          <meta name="keywords" content="Хозяйственные товары в Ростове-на-Дону, hoztovary, hoztovary161, 161, хозтовары 161,хозтовары, hoztovary161ru," />
+        </Helmet>
         <div className="gen_div container">
-          <h2>Меню</h2>
+          <div className='title-homePage'>
+            <h2>Меню</h2>
 
+            <h1>Хозяйственные товары в Ростове-на-Дону</h1>
+          </div>
           <div className="general-div">
             <Categories />
 
