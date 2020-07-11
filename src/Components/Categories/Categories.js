@@ -48,6 +48,7 @@ class Categories extends Component {
     return (
       <div className="categories">
         <button className="btn btn-dark submenubtn category-open-btn">
+
           <span className="menuBtnName">
             Menu
         </span>
@@ -57,17 +58,19 @@ class Categories extends Component {
             <span className="thirdLine"></span>
           </div>
         </button>
+        <div className="categories-items">
 
-        <ul className="categories_ul">
-          {
-            categories.data.map(item => (
-              <li className="categories_li" key={item.id}>
-                <a className="categories_a" >{item.title}</a>
-                <OpenCategory motherId={item.id} />
-              </li>
-            ))
-          }
-        </ul>
+          <ul className="categories_ul">
+            {
+              categories.data.map(item => (
+                <li className="categories_li" key={item.id}>
+                  <a className="categories_a" >{item.title}</a>
+                  <OpenCategory motherId={item.id} />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     );
   }
