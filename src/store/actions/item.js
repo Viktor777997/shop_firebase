@@ -18,6 +18,10 @@ export const FETCH_SLIDEITEM_REQUEST = 'FETCH_SLIDEITEM_REQUEST';
 export const FETCH_SLIDEITEM_SUCCESS = 'FETCH_SLIDEITEM_SUCCESS';
 export const FETCH_SLIDEITEM_FAILURE = 'FETCH_SLIDEITEM_FAILURE';
 
+export const FETCH_SEARCHEDITEM_REQUEST = 'FETCH_SEARCHEDITEM_REQUEST';
+export const FETCH_SEARCHEDITEM_SUCCESS = 'FETCH_SEARCHEDITEM_SUCCESS';
+export const FETCH_SEARCHEDITEM_FAILURE = 'FETCH_SEARCHEDITEM_FAILURE';
+
 export const CREATE_ITEM_REQUEST = 'CREATE_ITEM_REQUEST';
 export const CREATE_ITEM_SUCCESS = 'CREATE_ITEM_SUCCESS';
 export const CREATE_ITEM_FAILURE = 'CREATE_ITEM_FAILURE';
@@ -48,6 +52,19 @@ export const fetchItems = (query, limit) => (dispatch, getState, { getFirebase, 
     });
 };
 
+export const fetchSearchedItems = query => (dispatch, getState, { getFirebase, getFirestore }) => {
+  const Api = new ApiService(getFirestore(), getFirebase());
+
+  dispatch(createAction(FETCH_SEARCHEDITEM_REQUEST));
+
+  Api.getSearchedItems(query)
+    .then(payload => {
+      dispatch(createAction(FETCH_SEARCHEDITEM_SUCCESS, payload));
+    })
+    .catch(payload => {
+      dispatch(createAction(FETCH_SEARCHEDITEM_FAILURE, ErrorService.parse(payload)));
+    });
+};
 export const fetchSlideItems = query => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
 

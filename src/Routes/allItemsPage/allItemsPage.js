@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchItems, deleteItem } from '../../store/actions/item';
+import { fetchItems, deleteItem, fetchSearchedItems } from '../../store/actions/item';
 import { fetchCategories } from '../../store/actions/category';
 
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import ErrorPage from '../errorPage';
 class AllItemsPage extends Component {
 
     state = {
-        term: '',
+        term: 'ch',
         available: "all",
         isDidAction: false,
         categoryId: "",
@@ -70,13 +70,21 @@ class AllItemsPage extends Component {
         }
         return this.props.getItems()
     }
-
+    onSearchChange = (e) => {
+        console.log(e.target.value)
+        this.setState(state => ({ ...state, term: e.target.value }));
+    }
+    onSearchSubmit = (e) => {
+        // e.preventdefault()
+        // console.log('etst')
+        this.props.getSearchedItems(this.state.term)
+    }
     render() {
         const { items, categories } = this.props;
+        console.log(this.props.searchItems)
         if (!items.isLoaded || !items.data || !categories.isLoaded || !categories.data) {
             return (
                 <Loading />
-
             )
         }
 
@@ -97,8 +105,10 @@ class AllItemsPage extends Component {
                                         type="search"
                                         placeholder="Имя"
                                         aria-label="Search"
-                                    ></input>
-                                    <button className="btn my-2 my-sm-0 search-btn" type="button" >
+                                        onChange={this.onSearchChange}
+                                        value={this.state.term}
+                                    />
+                                    <button className="btn my-2 my-sm-0 search-btn" type="button" onClick={this.onSearchSubmit}>
                                         <svg className="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
                                             <path fillRule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
@@ -161,15 +171,18 @@ class AllItemsPage extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return {
         item: state.item.current,
         items: state.item.list,
+        searchItems: state.item.searchItems,
         categories: state.category.list,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        getSearchedItems: query => dispatch(fetchSearchedItems(query)),
         getItems: query => dispatch(fetchItems(query)),
         deleteItem: query => dispatch(deleteItem(query)),
         getCategories: query => dispatch(fetchCategories(query)),

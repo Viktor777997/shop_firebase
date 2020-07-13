@@ -15,6 +15,11 @@ const initialState = {
     isLoaded: true,
     error: null,
     data: [],
+  },
+  searchItems: {
+    isLoaded: true,
+    error: null,
+    data: [],
   }
 };
 
@@ -121,8 +126,38 @@ export default (state = initialState, action) => {
         },
       };
     }
-
-
+    // searchedItems
+    case actionTypes.FETCH_SEARCHEDITEM_REQUEST: {
+      return {
+        ...state,
+        searchItems: {
+          ...state.list,
+          isLoaded: false,
+          error: null,
+        },
+      };
+    }
+    case actionTypes.FETCH_SEARCHEDITEM_FAILURE: {
+      return {
+        ...state,
+        searchItems: {
+          ...state.list,
+          isLoaded: true,
+          error: action.payload,
+        },
+      };
+    }
+    case actionTypes.FETCH_SEARCHEDITEM_SUCCESS: {
+      return {
+        ...state,
+        searchItems: {
+          ...state.list,
+          data: action.payload,
+          isLoaded: true,
+          error: null,
+        },
+      };
+    }
 
     /* CREATE AND DELETE ITEM PART */
 
