@@ -35,17 +35,14 @@ class CtdSerchedItems extends Component {
     }
     render() {
         const { items, category } = this.props;
-
         if (!items.isLoaded || !items.data || !category.isLoaded || !category.data) {
             return (
                 <Loading />
             )
         }
 
-        if (items.error) {
-            return <div>
-                <ErrorPage />
-            </div>
+        if (items.error || items.data.length === 0) {
+            return <ErrorPage />
         }
         return (
 

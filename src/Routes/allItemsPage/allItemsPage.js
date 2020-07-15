@@ -71,17 +71,15 @@ class AllItemsPage extends Component {
         return this.props.getItems()
     }
     onSearchChange = (e) => {
-        console.log(e.target.value)
         this.setState(state => ({ ...state, term: e.target.value }));
     }
     onSearchSubmit = (e) => {
         // e.preventdefault()
-        // console.log('etst')
         this.props.getSearchedItems(this.state.term)
     }
     render() {
         const { items, categories } = this.props;
-        console.log(this.props.searchItems)
+
         if (!items.isLoaded || !items.data || !categories.isLoaded || !categories.data) {
             return (
                 <Loading />
@@ -171,7 +169,6 @@ class AllItemsPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         item: state.item.current,
         items: state.item.list,
