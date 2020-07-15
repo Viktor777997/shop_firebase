@@ -6,14 +6,26 @@ class ApiService {
     this._firebase = firebase;
   }
 
-
   // items
-  getItems = async (query = [], limit = 10000, titleOfLastPerson = '') => {
-    console.log(limit, titleOfLastPerson)
-    let resp = this._firestore.collection('items').orderBy('createDate', 'desc').startAfter(titleOfLastPerson).limit(limit)
+  getItems = async (query = [], limit = 10, startItemId = '') => {
+    let resp = this._firestore.collection('items');
+
+    let startAtItem;
+    if (startItemId) {
+      startAtItem = await resp.doc(startItemId).get();
+    }
+
     query.forEach(value => {
-      resp = resp.where(...value)
+      resp = resp.where(...value);
     });
+
+    resp = resp.orderBy('createDate', 'desc');
+
+    if (startAtItem) {
+      resp = resp.startAfter(startAtItem);
+    }
+
+    resp = resp.limit(limit);
 
     resp = await resp.get();
 
@@ -31,16 +43,12 @@ class ApiService {
   // };
 
   getItem = async (id = null) => {
-    const resp = await this._firestore
-      .collection('items')
-      .doc(id)
-      .get();
+    const resp = await this._firestore.collection('items').doc(id).get();
 
     return { id, ...resp.data() };
   };
 
   createItem = async ({ title, text, categoryId, bigPrice, smallPrice, available, slideItem, image } = {}) => {
-
     const fileName = `${makeId(10)}.${getExtension(image.name)}`;
 
     let resp = await this._firebase.uploadFile('/images', image, undefined, {
@@ -76,8 +84,8 @@ class ApiService {
       smallPrice,
       slideItem,
       available,
-      categoryId
-    }
+      categoryId,
+    };
     if (image) {
       const fileName = `${makeId(10)}.${getExtension(image.name)}`;
 
@@ -88,10 +96,9 @@ class ApiService {
       const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
       const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
 
-      data.image = `${getPathFromUrl(imgUrl)}?alt=media`
+      data.image = `${getPathFromUrl(imgUrl)}?alt=media`;
       data.thumb = `${getPathFromUrl(thumbUrl)}?alt=media`;
     }
-
 
     let resp = await doc.update(data);
 
@@ -113,12 +120,7 @@ class ApiService {
     return resp;
   };
 
-
-
-
   // categories
-
-
 
   getCategories = async (query = []) => {
     let resp = this._firestore.collection('categories').orderBy('createDate', 'desc');
@@ -132,10 +134,7 @@ class ApiService {
   };
 
   getCategory = async (id = null) => {
-    const resp = await this._firestore
-      .collection('categories')
-      .doc(id)
-      .get();
+    const resp = await this._firestore.collection('categories').doc(id).get();
 
     return { id, ...resp.data() };
   };
@@ -146,7 +145,7 @@ class ApiService {
       title,
       available,
     });
-    return resp
+    return resp;
   };
   updateCategory = async (id = null, { title, available, categoryMother }) => {
     const doc = await this._firestore.collection('categories').doc(id);
@@ -154,9 +153,7 @@ class ApiService {
       title,
       available,
       categoryMother,
-    }
-
-
+    };
 
     let resp = await doc.update(data);
 
@@ -178,26 +175,17 @@ class ApiService {
     return resp;
   };
 
-
-
   // user
 
-
   getUser = async (id = null) => {
-    const resp = await this._firestore
-      .collection('users')
-      .doc(id)
-      .get();
+    const resp = await this._firestore.collection('users').doc(id).get();
     return resp.data();
   };
 
   createUser = async ({ email, password, firstName, lastName } = {}) => {
     let resp = await this._firebase.auth().createUserWithEmailAndPassword(email, password);
 
-    resp = await this._firestore
-      .collection('users')
-      .doc(resp.user.uid)
-      .set({ firstName, lastName });
+    resp = await this._firestore.collection('users').doc(resp.user.uid).set({ firstName, lastName });
     return resp;
   };
 
