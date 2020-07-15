@@ -8,8 +8,9 @@ class ApiService {
 
 
   // items
-  getItems = async (query = [], limit = 10000) => {
-    let resp = this._firestore.collection('items').orderBy('createDate', 'desc')
+  getItems = async (query = [], limit = 10000, titleOfLastPerson = '') => {
+    console.log(limit, titleOfLastPerson)
+    let resp = this._firestore.collection('items').orderBy('createDate', 'desc').startAfter(titleOfLastPerson).limit(limit)
     query.forEach(value => {
       resp = resp.where(...value)
     });
@@ -19,15 +20,15 @@ class ApiService {
     return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   };
 
-  getSearchedItems = async (queryText = '') => {
-    let resp = this._firestore.collection('items').orderBy('createDate', 'desc').databaseReference.orderByChild('_searchLastName')
-      .startAt(queryText)
-      .endAt(queryText + "\uf8ff")
+  // getSearchedItems = async (queryText = '') => {
+  //   let resp = this._firestore.collection('items').orderBy('createDate', 'desc').databaseReference.orderByChild('_searchLastName')
+  //     .startAt(queryText)
+  //     .endAt(queryText + "\uf8ff")
 
-    resp = await resp.get();
+  //   resp = await resp.get();
 
-    return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-  };
+  //   return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+  // };
 
   getItem = async (id = null) => {
     const resp = await this._firestore

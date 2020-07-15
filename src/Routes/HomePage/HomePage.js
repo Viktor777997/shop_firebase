@@ -13,24 +13,29 @@ import ErrorPage from '../errorPage';
 class HomePage extends Component {
 
   state = {
-    limit: 3,
+    limit: 5,
+    titleOfLastPerson: 3,
   }
 
   componentDidMount() {
 
-    this.props.getItems([['available', '==', 'true']], this.state.limit);
+    this.loadData()
 
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState !== this.state) {
-      this.props.getItems([['available', '==', 'true']], this.state.limit);
+      this.loadData()
     }
+  }
+
+  loadData = () => {
+    this.props.getItems([['available', '==', 'true']], this.state.limit, this.state.titleOfLastPerson);
   }
 
   render() {
 
     const { items } = this.props;
-
+    console.log(items)
     if (!items.isLoaded || !items.data) {
       return (
         <Loading />
@@ -45,7 +50,7 @@ class HomePage extends Component {
     }
     return (
       <div className="App">
-        <Helmet htmlAttributes>
+        <Helmet >
           <title>Хозяйственные товары в Ростове-на-Дону</title>
           <meta name="description" content="Хозяйственные товары в Ростове-на-Дону, Меню" />
           <meta name="keywords" content="Хозяйственные товары в Ростове-на-Дону, hoztovary, hoztovary161, 161, хозтовары 161,хозтовары, hoztovary161ru," />
@@ -81,8 +86,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getItems: (query, limit) => dispatch(fetchItems(query, limit)),
-    getSlideItems: query => dispatch(fetchItems(query)),
+    getItems: (query, limit, titleOfLastPerson) => dispatch(fetchItems(query, limit, titleOfLastPerson)),
   };
 }
 
