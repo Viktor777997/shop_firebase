@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchSlideItems } from '../../store/actions/item';
-import Loading from '../loading'
 import ErrorPage from "../../Routes/errorPage";
 
 class SlickSliderHomePage extends Component {
@@ -56,7 +55,7 @@ class SlickSliderHomePage extends Component {
 
         if (!items.isLoaded || !items.data) {
             return (
-                <Loading />
+                null
             )
         }
 

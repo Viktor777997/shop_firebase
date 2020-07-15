@@ -58,6 +58,17 @@
 
 .slide-and-random-cards {
     width: 73%;
+
+    .addItems {
+        display: block;
+        margin: 0 auto;
+        color: #3b3b3b;
+        width: 100%;
+
+        &:hover {
+            color: $black;
+        }
+    }
 }
 
 .general-slide {

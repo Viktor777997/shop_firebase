@@ -9,7 +9,7 @@ class PricePage extends Component {
         return (
 
             <div className="container" >
-                <Helmet htmlAttributes>
+                <Helmet >
                     <title>Прайс-лист</title>
                     <meta name="description" content="Оцинкованные товары, Садовый инветарь, Черенки, Чугунное литье, Мангалы" />
                     <meta name="keywords" content="Оцинкованные товары, Садовый инветарь, Черенки, Чугунное литье, Мангалы" />
