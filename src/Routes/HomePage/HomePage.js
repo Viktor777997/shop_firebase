@@ -7,21 +7,21 @@ import { Helmet } from 'react-helmet';
 import SlickSliderHomePage from '../../Components/SlickSliderHomePage/SlickSliderHomePage';
 import Categories from '../../Components/Categories';
 import './HomePage.scss';
-import Loading from '../../Components/loading';
 import AllCards from '../../Components/allCards';
 import ErrorPage from '../errorPage';
+import Loading from '../../Components/loading';
 class HomePage extends Component {
   state = {
-    limit: 2,
+    limit: 9,
     startItemId: null,
   };
 
   componentDidMount() {
-
+    window.addEventListener('scroll', this.lazyLoad)
     /// todo: remove this IMPORTANT
-    window.asaa = (...args)=>{
+    window.asaa = (...args) => {
       this.setState(...args)
-    };
+    }
 
 
     this.loadData();
@@ -31,17 +31,20 @@ class HomePage extends Component {
       this.loadData();
     }
   }
+  lazyLoad = async () => {
+    const scroll = (document.documentElement.scrollHeight - window.innerHeight) === window.scrollY;
+    if (scroll) {
+      this.setState({ limit: this.state.limit + 9 })
+    }
+  }
 
   loadData = () => {
     this.props.getItems([['available', '==', 'true']], this.state.limit, this.state.startItemId);
   };
 
+  // 
   render() {
     const { items } = this.props;
-    console.log(items);
-    if (!items.isLoaded || !items.data) {
-      return <Loading />;
-    }
 
     if (items.error) {
       return (
@@ -63,7 +66,6 @@ class HomePage extends Component {
         <div className="gen_div container">
           <div className="title-homePage">
             <h2>Меню</h2>
-
             <h1>Хозяйственные товары в Ростове-на-Дону</h1>
           </div>
           <div className="general-div">
@@ -74,11 +76,13 @@ class HomePage extends Component {
                 <SlickSliderHomePage />
               </div>
               <AllCards items={items} />
-              {/* <button type="button" className="btn btn-primary" onClick={() => this.setState({ limit: this.state.limit + 3 })}>Primary</button> */}
+
+              {(items.isLoaded || !items.data) ? <div className='m-3'> <button type="button" className='btn btn-link addItems' onClick={() => this.setState({ limit: this.state.limit + 9 })}>Ещё</button></div> : <div className="m-4"><Loading /></div>}
+
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
