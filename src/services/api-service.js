@@ -7,7 +7,7 @@ class ApiService {
   }
 
   // items
-  getItems = async (query = [], limit = 10, startItemId = '') => {
+  getItems = async (query = [], limit = 10000, startItemId = '') => {
     let resp = this._firestore.collection('items');
 
     let startAtItem;
@@ -32,15 +32,12 @@ class ApiService {
     return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   };
 
-  // getSearchedItems = async (queryText = '') => {
-  //   let resp = this._firestore.collection('items').orderBy('createDate', 'desc').databaseReference.orderByChild('_searchLastName')
-  //     .startAt(queryText)
-  //     .endAt(queryText + "\uf8ff")
+  getSearchedItems = async (queryText = '') => {
+    let resp = this._firestore.collection('items').where('title', 'array-contains', queryText.toLowerCase()).orderBy('createDate', 'desc')
+    resp = await resp.get();
 
-  //   resp = await resp.get();
-
-  //   return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-  // };
+    return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+  };
 
   getItem = async (id = null) => {
     const resp = await this._firestore.collection('items').doc(id).get();

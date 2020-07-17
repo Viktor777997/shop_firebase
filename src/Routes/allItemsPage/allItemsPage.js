@@ -73,7 +73,7 @@ class AllItemsPage extends Component {
     onSearchChange = (e) => {
         this.setState(state => ({ ...state, term: e.target.value }));
     }
-    onSearchSubmit = (e) => {
+    onSearchSubmit = () => {
         // e.preventdefault()
         this.props.getSearchedItems(this.state.term)
     }
@@ -169,6 +169,7 @@ class AllItemsPage extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return {
         item: state.item.current,
         items: state.item.list,
