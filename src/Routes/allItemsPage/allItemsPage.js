@@ -73,13 +73,13 @@ class AllItemsPage extends Component {
     onSearchChange = (e) => {
         this.setState(state => ({ ...state, term: e.target.value }));
     }
-    onSearchSubmit = () => {
+    onSearchSubmit = (e) => {
         // e.preventdefault()
-        this.props.getSearchedItems(this.state.term)
+        this.props.getItems(null, null, null, this.state.term)
     }
     render() {
         const { items, categories } = this.props;
-
+        console.log(items)
         if (!items.isLoaded || !items.data || !categories.isLoaded || !categories.data) {
             return (
                 <Loading />
@@ -87,9 +87,7 @@ class AllItemsPage extends Component {
         }
 
         if (items.error) {
-            return <div>
-                <ErrorPage />
-            </div>
+            return <ErrorPage />
         }
         return (
             <div className='container' >
@@ -98,6 +96,7 @@ class AllItemsPage extends Component {
                         <tr>
                             <th scope="col ">
                                 <div className='row pl-3 pr-3'>
+
                                     <input
                                         className="form-control mr-sm-2 search-input col"
                                         type="search"
@@ -112,6 +111,7 @@ class AllItemsPage extends Component {
                                             <path fillRule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
                                         </svg>
                                     </button>
+
                                 </div>
                             </th>
                             <th scope="col">
@@ -144,21 +144,22 @@ class AllItemsPage extends Component {
                     </thead>
                     <tbody>
                         {
-                            items.data.map(item => (
-                                <tr key={item.id}>
-                                    <td>{item.title}</td>
-                                    <td>{item.available === 'true' ? 'Да' : 'Нет'}  </td>
-                                    <td>{item.id}</td>
-                                    <td>{item.slideItem === 'true' ? 'Да' : 'Нет'}</td>
-                                    <td>{`${item.bigPrice} ₽`}</td>
-                                    <td>{`${item.smallPrice} ₽`}</td>
-                                    <td>
-                                        <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Удалить</button>
-                                        <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Изменить</Link>
-                                        <Link to={`/card/${item.id}`} className="mr-2">Показать</Link>
-                                    </td>
-                                </tr>
-                            ))
+                            items.data
+                                .map(item => (
+                                    <tr key={item.id}>
+                                        <td>{item.title}</td>
+                                        <td>{item.available === 'true' ? 'Да' : 'Нет'}  </td>
+                                        <td>{item.id}</td>
+                                        <td>{item.slideItem === 'true' ? 'Да' : 'Нет'}</td>
+                                        <td>{`${item.bigPrice} ₽`}</td>
+                                        <td>{`${item.smallPrice} ₽`}</td>
+                                        <td>
+                                            <button className="delete-btn mr-2" onClick={() => this.delete(item.id)} >Удалить</button>
+                                            <Link to={`/admin/itemEdit/${item.id}`} className="mr-2">Изменить</Link>
+                                            <Link to={`/card/${item.id}`} className="mr-2">Показать</Link>
+                                        </td>
+                                    </tr>
+                                ))
                         }
                     </tbody>
                 </table>
@@ -169,19 +170,16 @@ class AllItemsPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         item: state.item.current,
         items: state.item.list,
-        searchItems: state.item.searchItems,
         categories: state.category.list,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getSearchedItems: query => dispatch(fetchSearchedItems(query)),
-        getItems: query => dispatch(fetchItems(query)),
+        getItems: (query, limit, startItemId, queryText) => dispatch(fetchItems(query, limit, startItemId, queryText)),
         deleteItem: query => dispatch(deleteItem(query)),
         getCategories: query => dispatch(fetchCategories(query)),
 

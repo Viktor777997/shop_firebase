@@ -7,14 +7,17 @@ class ApiService {
   }
 
   // items
-  getItems = async (query = [], limit = 10000, startItemId = '') => {
+  getItems = async (query = [], limit = '', startItemId = '', queryText = '') => {
     let resp = this._firestore.collection('items');
-
     let startAtItem;
     if (startItemId) {
       startAtItem = await resp.doc(startItemId).get();
     }
 
+    if (queryText) {
+      let query = queryText.trim().toLowerCase()
+      resp = resp.where('keyWords', 'array-contains', query);
+    }
     query.forEach(value => {
       resp = resp.where(...value);
     });
@@ -24,8 +27,9 @@ class ApiService {
     if (startAtItem) {
       resp = resp.startAfter(startAtItem);
     }
-
-    resp = resp.limit(limit);
+    if (limit) {
+      resp = resp.limit(limit);
+    }
 
     resp = await resp.get();
 
@@ -33,7 +37,7 @@ class ApiService {
   };
 
   getSearchedItems = async (queryText = '') => {
-    let resp = this._firestore.collection('items').where('title', 'array-contains', queryText.toLowerCase()).orderBy('createDate', 'desc')
+    let resp = this._firestore.collection('items').where('keyWords', 'array-contains', queryText.toLowerCase()).orderBy('createDate', 'desc')
     resp = await resp.get();
 
     return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
@@ -51,7 +55,12 @@ class ApiService {
     let resp = await this._firebase.uploadFile('/images', image, undefined, {
       name: fileName,
     });
-
+    const arrName = [];
+    let curName = '';
+    title.split('').forEach((letter) => {
+      curName += letter;
+      arrName.push(curName)
+    })
     const imgUrl = await resp.uploadTaskSnapshot.ref.getDownloadURL();
 
     const thumbUrl = imgUrl.replace(fileName, `thumb-400-${fileName}`);
@@ -60,6 +69,7 @@ class ApiService {
       createDate: new Date(),
       image: `${getPathFromUrl(imgUrl)}?alt=media`,
       thumb: `${getPathFromUrl(thumbUrl)}?alt=media`,
+      keyWords: arrName,
       title,
       text,
       bigPrice,
@@ -74,6 +84,12 @@ class ApiService {
 
   updateItem = async (id = null, { title, text, bigPrice, smallPrice, available, slideItem, categoryId, image }) => {
     const doc = await this._firestore.collection('items').doc(id);
+    const arrName = [];
+    let curName = '';
+    title.split('').forEach((letter) => {
+      curName += letter;
+      arrName.push(curName)
+    })
     const data = {
       title,
       text,
@@ -82,6 +98,7 @@ class ApiService {
       slideItem,
       available,
       categoryId,
+      keyWords: arrName,
     };
     if (image) {
       const fileName = `${makeId(10)}.${getExtension(image.name)}`;
