@@ -4,17 +4,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchItems } from '../../store/actions/item';
-import { fetchCategory } from '../../store/actions/category';
-import { Helmet } from "react-helmet";
 
 import Loading from '../../Components/loading';
 import AllCards from '../../Components/allCards';
 import ErrorPage from '../errorPage';
 
-class CtdSerchedItems extends Component {
+class SearchedItems extends Component {
 
     state = {
-        id: this.props.match.params.id,
         query: this.props.match.params.query,
     }
 
@@ -22,36 +19,29 @@ class CtdSerchedItems extends Component {
         this.loadData();
     }
     componentDidUpdate(prevProps, prevState) {
-
-        if (prevState.id !== this.props.match.params.id) {
+        if ((prevState.query !== this.props.match.params.query)) {
             this.loadData();
-            this.setState({ id: this.props.match.params.id })
+            this.setState({ query: this.props.match.params.query })
         }
     }
     loadData = () => {
-        this.props.getItems([['available', '==', 'true'], ['categoryId', '==', this.state.id]]);
-        this.props.getCategory(this.state.id);
+        this.props.getItems([['available', '==', 'true']], this.state.limit, this.state.startItemId, this.state.query);
 
     }
     render() {
-        const { items, category } = this.props;
-        const { query } = this.state;
+        const { items } = this.props;
 
-        if (!items.isLoaded || !items.data || !category.isLoaded || !category.data) {
+        console.log(items)
+        if (!items.isLoaded || !items.data) {
             return <Loading />
         }
 
-        if (items.error || items.data.length === 0) {
+        if (items.error) {
             return <ErrorPage />
         }
         return (
 
             <div className="App">
-                <Helmet>
-                    <title>{category.data.title}</title>
-                    <meta name="description" content={category.data.title} />
-                    <meta name='keywords' content={category.data.title} />
-                </Helmet>
                 <div className="gen_div container">
                     <div className='title-homePage'>
                         <h2>Меню</h2>
@@ -60,8 +50,7 @@ class CtdSerchedItems extends Component {
                         <Categories />
                         <div className="slide-and-random-cards">
                             <div>
-                                <h3 className="text-right pr-3 mb-4">{category.data.title}</h3>
-                                <AllCards items={items} />
+                                {items.data.length !== 0 ? <AllCards items={items} /> : <p>Товары но имени "{this.state.query}" не найдены. <br /> Проверте первые буквы или символы.</p>}
                             </div>
                         </div>
                     </div>
@@ -73,16 +62,13 @@ class CtdSerchedItems extends Component {
 
 function mapStateToProps(state) {
     return {
-        category: state.category.current,
         items: state.item.list,
-        item: state.item.current,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getCategory: (id) => dispatch(fetchCategory(id)),
-        getItems: query => dispatch(fetchItems(query)),
+        getItems: (query, limit, startItemId, queryText) => dispatch(fetchItems(query, limit, startItemId, queryText)),
     };
 }
 
@@ -94,4 +80,4 @@ const enhance = compose(
     withRouter
 );
 
-export default enhance(CtdSerchedItems);
+export default enhance(SearchedItems);

@@ -38,12 +38,12 @@ export const DELETE_ITEM_FAILURE = 'DELETE_ITEM_FAILURE';
  * THUNKS
  */
 
-export const fetchItems = (query, limit, startItemId) => (dispatch, getState, { getFirebase, getFirestore }) => {
+export const fetchItems = (query, limit, startItemId, queryText) => (dispatch, getState, { getFirebase, getFirestore }) => {
   const Api = new ApiService(getFirestore(), getFirebase());
 
   dispatch(createAction(FETCH_ITEMS_REQUEST));
 
-  Api.getItems(query, limit, startItemId)
+  Api.getItems(query, limit, startItemId, queryText)
     .then(payload => {
       dispatch(createAction(FETCH_ITEMS_SUCCESS, payload));
     })

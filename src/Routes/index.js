@@ -18,6 +18,7 @@ import AllItemsPage from './allItemsPage';
 import CategoryEditPage from './categoryEditPage';
 import CtdSerchedItems from './ctdSerchedItems';
 import ErrorPage from './errorPage';
+import SearchedItems from './searchedItems/searchedItems';
 
 
 const App = (props) => {
@@ -31,6 +32,7 @@ const App = (props) => {
           <RouteWithMainLayout path="/contact" component={ContactPage} exact />
           <RouteWithMainLayout path="/card/:id" component={ItemInfoPage} exact />
           <RouteWithMainLayout path="/ctd/:id" component={CtdSerchedItems} exact />
+          <RouteWithMainLayout path="/search_query=:query" component={SearchedItems} exact />
           <RouteWithMainLayout path="/admin" component={AdminPage} exact />
           <RouteWithMainLayout path="/admin/login" component={LoginPage} exact />
           <RouteWithMainLayout path="/admin/allItems" component={AllItemsPage} exact />
