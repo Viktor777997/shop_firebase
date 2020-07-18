@@ -36,12 +36,12 @@ class ApiService {
     return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   };
 
-  getSearchedItems = async (queryText = '') => {
-    let resp = this._firestore.collection('items').where('keyWords', 'array-contains', queryText.toLowerCase()).orderBy('createDate', 'desc')
-    resp = await resp.get();
+  // getSearchedItems = async (queryText = '') => {
+  //   let resp = this._firestore.collection('items').where('keyWords', 'array-contains', queryText.toLowerCase()).orderBy('createDate', 'desc')
+  //   resp = await resp.get();
 
-    return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-  };
+  //   return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+  // };
 
   getItem = async (id = null) => {
     const resp = await this._firestore.collection('items').doc(id).get();

@@ -20,6 +20,7 @@ class CtdSerchedItems extends Component {
 
     componentDidMount() {
         this.loadData();
+        window.scrollTo(0, 0)
     }
     componentDidUpdate(prevProps, prevState) {
 

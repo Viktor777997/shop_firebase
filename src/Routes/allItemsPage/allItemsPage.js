@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { fetchItems, deleteItem, fetchSearchedItems } from '../../store/actions/item';
+import { fetchItems, deleteItem } from '../../store/actions/item';
 import { fetchCategories } from '../../store/actions/category';
 
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import ErrorPage from '../errorPage';
 class AllItemsPage extends Component {
 
     state = {
-        term: 'ch',
+        term: '',
         available: "all",
         isDidAction: false,
         categoryId: "",
@@ -71,19 +71,21 @@ class AllItemsPage extends Component {
         return this.props.getItems()
     }
     onSearchChange = (e) => {
-        this.setState(state => ({ ...state, term: e.target.value }));
+        this.setState({ term: e.target.value });
     }
     onSearchSubmit = (e) => {
-        // e.preventdefault()
-        this.props.getItems(null, null, null, this.state.term)
+        this.props.getItems(undefined, null, null, this.state.term)
+    }
+    handleKeyDown = (e) => {
+        if (e.charCode == 13) {
+            this.props.getItems(undefined, null, null, this.state.term)
+        }
     }
     render() {
         const { items, categories } = this.props;
         console.log(items)
         if (!items.isLoaded || !items.data || !categories.isLoaded || !categories.data) {
-            return (
-                <Loading />
-            )
+            return <Loading />
         }
 
         if (items.error) {
@@ -104,6 +106,7 @@ class AllItemsPage extends Component {
                                         aria-label="Search"
                                         onChange={this.onSearchChange}
                                         value={this.state.term}
+                                        onKeyPress={this.handleKeyDown}
                                     />
                                     <button className="btn my-2 my-sm-0 search-btn" type="button" onClick={this.onSearchSubmit}>
                                         <svg className="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
