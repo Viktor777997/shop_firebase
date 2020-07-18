@@ -16,7 +16,6 @@ class Header extends Component {
     if (e.charCode == 13) {
       this.props.history.push(`/search_query=${this.state.term}`)
     }
-
   }
   render() {
     return (
