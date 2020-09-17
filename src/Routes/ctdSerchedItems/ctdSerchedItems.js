@@ -22,6 +22,7 @@ class CtdSerchedItems extends Component {
         this.loadData();
         window.scrollTo(0, 0)
     }
+
     componentDidUpdate(prevProps, prevState) {
 
         if (prevState.id !== this.props.match.params.id) {
@@ -29,11 +30,12 @@ class CtdSerchedItems extends Component {
             this.setState({ id: this.props.match.params.id })
         }
     }
+
     loadData = () => {
         this.props.getItems([['available', '==', 'true'], ['categoryId', '==', this.state.id]]);
         this.props.getCategory(this.state.id);
-
     }
+
     render() {
         const { items, category } = this.props;
         const { query } = this.state;
@@ -42,11 +44,11 @@ class CtdSerchedItems extends Component {
             return <Loading />
         }
 
-        if (items.error || items.data.length === 0) {
+        if (items.error) {
             return <ErrorPage />
         }
-        return (
 
+        return (
             <div className="App">
                 <Helmet>
                     <title>{category.data.title}</title>
@@ -61,9 +63,12 @@ class CtdSerchedItems extends Component {
                         <Categories />
                         <div className="slide-and-random-cards">
                             <div>
-                                <h3 className="text-right pr-3 mb-4">{category.data.title}</h3>
-                                <AllCards items={items} />
+                                {items.data.length !== 0 ? <div>
+                                    <h3 className="text-right pr-3 mb-4">{category.data.title}</h3>
+                                    <AllCards items={items} />
+                                </div> : <div className="container pt-5"><p>Нет товаров</p> </div>}
                             </div>
+
                         </div>
                     </div>
                 </div>

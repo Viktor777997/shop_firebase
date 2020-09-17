@@ -23,7 +23,6 @@ class HomePage extends Component {
       this.setState(...args)
     }
 
-
     this.loadData();
   }
   componentDidUpdate(prevProps, prevState) {
@@ -72,9 +71,7 @@ class HomePage extends Component {
             <Categories />
 
             <div className="slide-and-random-cards">
-              <div className="general-slide">
-                <SlickSliderHomePage />
-              </div>
+              <SlickSliderHomePage />
               <AllCards items={items} />
 
               {(items.isLoaded || !items.data) ? <div className='m-3'> <button type="button" className='btn btn-link addItems' onClick={() => this.setState({ limit: this.state.limit + 9 })}>Ещё</button></div> : <div className="m-4"><Loading /></div>}

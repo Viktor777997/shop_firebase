@@ -169,7 +169,6 @@ class AllItemsPage extends Component {
             </div>
         );
     }
-
 }
 
 function mapStateToProps(state) {

@@ -50,7 +50,7 @@ class SearchedItems extends Component {
                         <Categories />
                         <div className="slide-and-random-cards">
                             <div>
-                                {items.data.length !== 0 ? <AllCards items={items} /> : <p>Товары но имени "{this.state.query}" не найдены. <br /> Проверте первые буквы или символы.</p>}
+                                {items.data.length !== 0 ? <AllCards items={items} /> : <div className="container pt-5"> <p>Товары но имени "{this.state.query}" не найдены. <br /> Проверте первые буквы или символы.</p> </div>}
                             </div>
                         </div>
                     </div>

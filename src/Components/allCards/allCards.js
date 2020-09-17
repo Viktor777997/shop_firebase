@@ -5,7 +5,6 @@ import './allCards.scss'
 class AllCards extends Component {
 
     render() {
-
         return (
             <ul className="random_cards ">
                 {this.props.items.data.map(item => (
