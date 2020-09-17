@@ -50,18 +50,19 @@
     }
 
     .categories {
-        top: 100px;
         position: fixed;
-        margin-top: 50px;
+        padding-top: 155px;
+        height: 100%;
         min-width: 0;
         z-index: 99;
+        top: 0;
         left: 0;
         width: 0;
-        height: 100vh;
-        background: #ffffff;
 
         .categories-items {
-            overflow: hidden;
+            overflow-y: scroll;
+            height: 100%;
+            background: $white;
         }
 
         a {
@@ -128,10 +129,6 @@
         right: 8px;
     }
 
-    .categories {
-        top: 104px;
-    }
-
     .general-div {
         position: unset;
         margin: 0 auto;
@@ -157,10 +154,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .categories {
-        top: 93px;
-    }
-
     .title-homePage {
         padding: 0px 0 20px 20px;
     }
@@ -192,6 +185,10 @@
 @media only screen and (max-width: 600px) {
     .menu-btn-clicked .categories {
         width: 100%;
+    }
+
+    .categories {
+        padding-top: 145px;
     }
 
     .category-open-btn {

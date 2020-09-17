@@ -12,12 +12,13 @@ class CreateItem extends Component {
     constructor(props) {
         super(props)
         if (this.props.data) {
-            const { available, categoryId, title, bigPrice, smallPrice, text, slideItem } = this.props.data
+            const { available, categoryId, title, personalPrice, bigPrice, smallPrice, text, slideItem } = this.props.data
             this.state = {
                 available,
                 categoryId,
                 title,
                 slideItem,
+                personalPrice,
                 bigPrice,
                 smallPrice,
                 text,
@@ -30,6 +31,7 @@ class CreateItem extends Component {
                 slideItem: 'false',
                 categoryId: '',
                 title: '',
+                personalPrice: '',
                 bigPrice: '',
                 smallPrice: '',
                 text: '',
@@ -75,28 +77,26 @@ class CreateItem extends Component {
     onHandleSubmit = (e) => {
         e.preventDefault();
 
-        const { categoryId, title, bigPrice, smallPrice, text, image } = this.state
+        const { categoryId, title, personalPrice, bigPrice, smallPrice, text, image } = this.state
 
 
         if (this.props.data) {
-            if (categoryId === '' || title === '' || bigPrice === '' || smallPrice === '' || text === '') {
+            if (categoryId === '' || title === '' || bigPrice === '' || smallPrice === '') {
                 return alert('Есть пустые строки')
             }
             this.props.edit(this.props.id, this.state)
             return alert('Карточка редактирована')
         }
-        if (categoryId === '' || title === '' || bigPrice === '' || smallPrice === '' || text === '' || image === '') {
+        if (categoryId === '' || title === '', personalPrice === '' || bigPrice === '' || smallPrice === '' || image === '') {
             return alert('Есть пустые строки')
         }
         this.props.create(this.state)
         return alert('Карточка создана')
-
-
     }
 
     render() {
         const { data, categories } = this.props;
-        const { title, bigPrice, smallPrice, text, image } = this.state
+        const { title, personalPrice, bigPrice, smallPrice, text, image } = this.state
 
         return (
             <form onSubmit={this.onHandleSubmit}>
@@ -134,12 +134,16 @@ class CreateItem extends Component {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword4">Цена розница</label>
-                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена розница" name='bigPrice' onChange={this.onHandleChnage} value={bigPrice} />
+                    <label htmlFor="exampleInputPassword124">Цена розница</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена розница" name='personalPrice' onChange={this.onHandleChnage} value={personalPrice} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword121">Цена опт</label>
-                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена опт" name='smallPrice' onChange={this.onHandleChnage} value={smallPrice} />
+                    <label htmlFor="exampleInputPassword4">Цена мал. опт</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена мал. опт" name='bigPrice' onChange={this.onHandleChnage} value={bigPrice} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="exampleInputPassword121">Цена круп. опт</label>
+                    <input type="number" className='form-control' id="formGroupExampleInput" placeholder="Цена круп. опт" name='smallPrice' onChange={this.onHandleChnage} value={smallPrice} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleFormControlTextarea15">О товаре</label>

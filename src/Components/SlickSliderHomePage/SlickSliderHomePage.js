@@ -69,7 +69,7 @@ class SlickSliderHomePage extends Component {
             return null
         }
         return (
-            <div>
+            <div className='general-slide'>
                 <Slider {...settings}>
                     {
                         items.data.map(item => (

@@ -36,20 +36,13 @@ class ApiService {
     return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   };
 
-  // getSearchedItems = async (queryText = '') => {
-  //   let resp = this._firestore.collection('items').where('keyWords', 'array-contains', queryText.toLowerCase()).orderBy('createDate', 'desc')
-  //   resp = await resp.get();
-
-  //   return resp.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-  // };
-
   getItem = async (id = null) => {
     const resp = await this._firestore.collection('items').doc(id).get();
 
     return { id, ...resp.data() };
   };
 
-  createItem = async ({ title, text, categoryId, bigPrice, smallPrice, available, slideItem, image } = {}) => {
+  createItem = async ({ title, text, categoryId, personalPrice, bigPrice, smallPrice, available, slideItem, image } = {}) => {
     const fileName = `${makeId(10)}.${getExtension(image.name)}`;
 
     let resp = await this._firebase.uploadFile('/images', image, undefined, {
@@ -74,6 +67,7 @@ class ApiService {
       text,
       bigPrice,
       smallPrice,
+      personalPrice,
       slideItem,
       available,
       categoryId,
@@ -82,7 +76,7 @@ class ApiService {
     return resp;
   };
 
-  updateItem = async (id = null, { title, text, bigPrice, smallPrice, available, slideItem, categoryId, image }) => {
+  updateItem = async (id = null, { title, text, personalPrice, bigPrice, smallPrice, available, slideItem, categoryId, image }) => {
     const doc = await this._firestore.collection('items').doc(id);
     const arrName = [];
     let curName = '';
@@ -93,6 +87,7 @@ class ApiService {
     const data = {
       title,
       text,
+      personalPrice,
       bigPrice,
       smallPrice,
       slideItem,
